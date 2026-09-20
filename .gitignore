@@ -1,10 +1,38 @@
-# Never commit Anki packages
-*.apkg
-*.colpkg
-
-# macOS
-.DS_Store
-
-# Python
+# Source packages, extracted collections, and media never belong in Git.
+*.[aA][pP][kK][gG]
+*.[cC][oO][lL][pP][kK][gG]
+*.anki2*
+*.anki21*
+*.db
+*.db-*
+*.sqlite*
+*.wal
+*.shm
+extracted/
+tmp/
+work/
+media/
+collection.media/
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+*.svg
+*.mp3
+*.mp4
+*.wav
+*.ogg
+*.pdf
+*.zip
+.venv/
 __pycache__/
-*.pyc
+*.py[cod]
+.DS_Store
+.release.lock
+.crabs-*.txt
+*.ttf
+*.otf
+*.woff*
+*.mov
+*.m4a

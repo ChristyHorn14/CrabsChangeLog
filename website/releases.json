@@ -1,0 +1,51 @@
+{
+  "latest_published_release_date": "2026-09-20",
+  "latest_release_date": "2026-09-20",
+  "previous_release_date": "2026-06-20",
+  "project": "Crabs Anki Deck",
+  "releases": [
+    {
+      "audit_status": "WARNING",
+      "changes": {
+        "cards_added": 291,
+        "cards_removed": 2,
+        "cards_updated": 473,
+        "media_added": 193,
+        "media_removed": 1,
+        "media_updated": 0,
+        "notes_added": 183,
+        "notes_fields_updated": 249,
+        "notes_removed": 2,
+        "notes_tags_only": 150,
+        "notes_updated": 399
+      },
+      "compatibility": "review_required",
+      "date": "2026-09-20",
+      "previous_release": "2026-06-20",
+      "publication_status": "published",
+      "total_cards": 5653,
+      "total_media": 3063,
+      "total_notes": 4275,
+      "version": "2026-09-20",
+      "whats_new": [
+        "291 cards added; 473 existing cards updated; 2 cards removed from the package.",
+        "183 notes added; 399 notes updated (249 with field edits, 150 tags only); 2 notes removed from the package.",
+        "193 media files added; 1 removed; 0 existing media files changed."
+      ]
+    },
+    {
+      "audit_status": "not_compared",
+      "changes": null,
+      "compatibility": "not_assessed",
+      "date": "2026-06-20",
+      "previous_release": null,
+      "publication_status": "published",
+      "total_cards": 5364,
+      "total_media": 2871,
+      "total_notes": 4094,
+      "version": "2026-06-20",
+      "whats_new": []
+    }
+  ],
+  "schema": 1
+}

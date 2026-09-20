@@ -1,0 +1,91 @@
+{
+  "baseline": "2026-06-20",
+  "candidate": "2026-09-20",
+  "checks": [
+    {
+      "detail": "Read and integrity-checked; collection.anki21, metadata v2, SQLite schema 11; {'notes': 4094, 'cards': 5364, 'media': 2871}",
+      "name": "Baseline package",
+      "status": "PASS"
+    },
+    {
+      "detail": "0 duplicate GUIDs",
+      "name": "Baseline GUID uniqueness",
+      "status": "PASS"
+    },
+    {
+      "detail": "Read and integrity-checked; collection.anki21b, metadata v3, SQLite schema 18; {'notes': 4275, 'cards': 5653, 'media': 3063}",
+      "name": "Candidate package",
+      "status": "PASS"
+    },
+    {
+      "detail": "0 duplicate GUIDs",
+      "name": "Candidate GUID uniqueness",
+      "status": "PASS"
+    },
+    {
+      "detail": "4092 notes match by GUID; 4092 also preserve numeric note ID",
+      "name": "Shared note GUIDs",
+      "status": "PASS"
+    },
+    {
+      "detail": "0 added, 1 removed, 0 changed deck definitions; compare names and IDs below",
+      "name": "Deck identity/structure",
+      "status": "WARNING"
+    },
+    {
+      "detail": "1 added, 0 removed, 0 modified note types",
+      "name": "Note types/templates",
+      "status": "WARNING"
+    },
+    {
+      "detail": "1 retained cards moved; package import may preserve users’ current deck placement",
+      "name": "Deck moves",
+      "status": "WARNING"
+    },
+    {
+      "detail": "2 notes and 2 cards absent in candidate. Importing an update does not reliably delete existing user content; review separately",
+      "name": "Removed content",
+      "status": "WARNING"
+    },
+    {
+      "detail": "0 changed notes are not newer than baseline; default If newer import can skip these",
+      "name": "Modified-note timestamps",
+      "status": "PASS"
+    },
+    {
+      "detail": "94 field/template definitions lack merge IDs; newer Anki may fall back to names when merging",
+      "name": "Field/template merge IDs",
+      "status": "WARNING"
+    },
+    {
+      "detail": "Static audit only: user edits, import options, Anki version and note-type merging affect outcomes. No package has been imported. A clean separate test profile is recommended before publishing",
+      "name": "Import outcome limitation",
+      "status": "WARNING"
+    }
+  ],
+  "schema": 1,
+  "status": "WARNING",
+  "summary": {
+    "cards_added": 291,
+    "cards_removed": 2,
+    "cards_updated": 473,
+    "media_added": 193,
+    "media_removed": 1,
+    "media_updated": 0,
+    "new": {
+      "cards": 5653,
+      "media": 3063,
+      "notes": 4275
+    },
+    "notes_added": 183,
+    "notes_fields_updated": 249,
+    "notes_removed": 2,
+    "notes_tags_only": 150,
+    "notes_updated": 399,
+    "old": {
+      "cards": 5364,
+      "media": 2871,
+      "notes": 4094
+    }
+  }
+}
