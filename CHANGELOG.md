@@ -1,7 +1,7 @@
 # Crabs Anki Deck — Changelog
 
 <!-- crabs:release:2026-09-21:start -->
-## September 21, 2026 — candidate, under review
+## September 21, 2026
 
 5,586 cards · 4,224 notes
 

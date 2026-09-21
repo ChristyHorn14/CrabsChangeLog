@@ -1,6 +1,6 @@
 # Crabs Anki Deck
 
-Release candidate: **September 21, 2026**
+Latest release: **September 21, 2026**
 
 **5,586 cards · 4,224 notes**
 
@@ -15,8 +15,6 @@ Release candidate: **September 21, 2026**
 - Branch counts include descendants and overlap across branches; changes can reflect retagging as well as new content.
 
 Previous release: June 20, 2026.
-
-This release is under review. The currently published download remains unchanged.
 
 Card updates may include text, tags, media, or deck placement changes. Items removed from this package may remain in an existing Anki collection after import.
 
