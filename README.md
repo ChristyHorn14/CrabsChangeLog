@@ -2,21 +2,21 @@
 
 Compare a previously published Anki deck with a new candidate, audit update identity and educational changes, and generate text snapshots, release notes and website metadata. Source packages stay outside this Git repository. This tool never runs Anki, imports a package, changes a live collection, repacks a deck, stages files, commits, pushes, uploads or deploys anything.
 
-## For the next release
+## One-command release workflow
 
-After September has actually been released, export your next deck from Anki and keep it beside the original September package. For example, for a January 15, 2027 candidate:
+Keep the previous published package and new export outside this repository. Run:
 
 ```sh
-cd /Users/chrishornung/Developer/Anki/CrabsChangeLog
-.venv/bin/python release.py ../9-20-26Crabs.apkg ../1-15-27Crabs.apkg \
-  --baseline-date 2026-09-20 --release-date 2027-01-15
-.venv/bin/python git_safety.py
-git status --short
+.venv/bin/python release_workflow.py /path/to/previous.apkg /path/to/new.apkg \
+  --baseline-date YYYY-MM-DD --release-date YYYY-MM-DD \
+  --website /path/to/chrishornungmd.com
 ```
 
-Substitute your actual candidate filename and release date. **Until September is published, June remains the published baseline.** Choosing a package as the baseline records your assertion that it was published. Filenames have no role in note/deck identity and do not determine release dates.
+Use actual ISO dates, with the new date later than the baseline. This runs all pipeline tests, validates package/deck identity, compares releases, generates audits/changelog/release metadata/stats/tags/public documentation, and prints checks. New releases default to **candidate**: the existing website remains unchanged. Review the audit, `website/whats-new.md`, tag changes, and `docs/usage-review.md`; add optional editorial bullets using `--notes-file` (they persist on rerun). Test the update in a separate Anki profile when appropriate.
 
-Stop and read the console checks, the new `reports/<baseline>_to_<candidate>.md`, `CHANGELOG.md`, and `website/whats-new.md`. `WARNING` requires review; `FAIL` blocks generation. No command here commits or publishes anything.
+After review and distribution through the existing download workflow, rerun the **same command** with `--publication-status published`. It also runs website tests, builds the static Crabs page and homepage from generated data, and checks the build. Review both Git diffs, preview the site, then commit/publish through your usual workflow. The command never commits, pushes, uploads or deploys. September 20, 2026 is already recorded as published. No ChatGPT Work or LLM is needed for routine releases.
+
+One-time setup is below. The optional `--website` points to the existing local website checkout, not a deployment endpoint. Omit it to generate pipeline outputs alone. The lower-level `release.py` retains all existing options; `release_workflow.py` forwards them and adds the test/build orchestration. If tests or generation fail, it stops with a nonzero exit. A website failure can leave successfully generated pipeline artifacts; fix the error and rerun.
 
 ## Setup
 
@@ -119,17 +119,17 @@ No HTML whitespace rewriting is applied to snapshot field contents. Cosmetic HTM
 1. Match unique **GUIDs** first. Anki's packaged-deck importer uses GUID correspondence; numeric note IDs can be remapped by import and are not trusted alone.
 2. For remaining notes, match unique exact field content within the same model ID. Only line endings and edge whitespace are normalized for this fallback.
 3. For remaining notes, match a unique identical first field within the same model ID when it is at least 24 characters long. This conservative fallback can recognize a changed answer when the question remains unchanged.
-4. Report duplicate-key ambiguity instead of selecting an arbitrary note. Unresolved notes stay in unmatched added/removed lists, with provisional counts and a warning. Duplicate GUIDs cause FAIL. No fuzzy semantic matching is attempted.
+4. Report duplicate-key ambiguity instead of selecting an arbitrary note. Unresolved notes stay in unmatched added/removed lists, with provisional counts and blocking validation. Duplicate GUIDs cause FAIL. No fuzzy semantic matching is attempted.
 
-Fallback matching is an **audit inference**, never proof of update compatibility. Every fallback is identified in the detailed report and triggers a warning. Short keys, fully rewritten notes, and simultaneous model-ID/content changes may remain unmatched. Retained GUIDs take precedence even when all fields changed. Numeric ID/GUID/model changes and reused numeric IDs are reported separately.
+Fallback matching is an **audit inference**, never proof of update compatibility. Every fallback is identified in the detailed report and triggers a warning; changed GUID/model correspondence also blocks release generation. Short keys, fully rewritten notes, and simultaneous model-ID/content changes may remain unmatched. Retained GUIDs take precedence even when all fields changed. Numeric ID/GUID/model changes and reused numeric IDs are reported separately.
 
 Cards are paired by matched note plus ordinal, so regenerated numeric card IDs do not automatically become deletion/addition pairs. Template/schema changes trigger warnings; ordinal-based counts require review if templates were reordered. Added/deleted cloze ordinals count as card additions/removals. Updated-card totals count distinct retained cards affected by note fields/tags/type, model/template definition, referenced media byte changes, or deck placement. They are not a forecast of Anki's import summary. A deck move alone can update a card without modifying its note.
 
 ## PASS, WARNING and FAIL
 
 - **PASS**: the specific check succeeded. It is not a blanket guarantee that every user's collection will import identically.
-- **WARNING**: review is required. Examples include deck/model changes, deletions, content-only matches, identifier changes, ambiguous matches, missing literal media references, absent field/template merge IDs, stale changed-note timestamps and the general limits of static import prediction. Text outputs are generated, but remain candidates by default.
-- **FAIL**: stop, exit 2 and do not generate release artifacts. Examples include unknown formats/schemas, invalid or corrupt packages, missing manifest entries, checksum mismatches, inconsistent note/card references, duplicate GUIDs, empty decks, no shared GUID lineage, reused dates for different packages, or conflicting snapshots.
+- **WARNING**: review is required. Examples include deck/model changes, deletions, content-only matches, numeric card/note ID changes with retained GUIDs, missing literal media references, absent field/template merge IDs, stale changed-note timestamps and the general limits of static import prediction. Text outputs are generated, but remain candidates by default.
+- **FAIL**: stop, exit 2 and do not generate release artifacts. Examples include unknown formats/schemas, invalid or corrupt packages, missing manifest entries, checksum mismatches, inconsistent note/card references, duplicate GUIDs, empty decks, no shared GUID lineage, reused dates for different packages, conflicting snapshots, renamed retained decks, loss of the dominant baseline deck name/ID, changed matched GUID/model identity, reused numeric note IDs with different GUIDs, or unresolved ambiguous correspondence.
 
 Normal success, including reviewed-needed warnings, exits 0. `--strict` treats warnings as blocking and exits 2. The generic import-outcome limitation is deliberately a warning, so current static audits will require review in strict mode. `--check-only` performs no release-output writes. Format failures print a useful diagnostic and stop rather than falling back to the compatibility database.
 
@@ -147,6 +147,9 @@ Before distributing a structurally changed deck, you can manually test in a disp
 | `releases.json` | Internal release registry, source SHA-256 provenance and retained history. |
 | `CHANGELOG.md` | User-facing quantitative history with optional reviewed editorial bullets. |
 | `website/releases.json` | Compact public release history, totals, deltas, status and What's New; no raw notes, local paths or internal IDs. |
+| `website/deck-stats.json` | Current package totals, names and explicit version label. |
+| `website/tags.json` | Exact nested tag paths with distinct direct/aggregate notes and cards. |
+| `website/how-to-use.md`, `website/updating.md` | Generated copies of human-authored docs. |
 | `website/whats-new.md` | Newest recorded release, labeled as candidate until explicitly marked published. |
 
 Repeated extraction produces identical snapshot bytes. Repeating the same release command produces identical output bytes, without duplicate records or meaningless filename suffixes. A date is bound to one source package checksum. Different bytes under the same date are rejected even if the visible content appears equivalent: use a new date for a genuinely new build, or restore the original untouched package. Snapshots are never silently replaced with different content. Past reports and snapshots are retained.
@@ -155,11 +158,13 @@ Future comparisons append a new date, preserve previous release records, and mar
 
 Changelog sections use `<!-- crabs:release:... -->` markers. Generated text within a marker pair is replaced deterministically. Put manual prose outside those markers, or use `--notes-file` to store reviewed public bullets in the registry and website outputs. Automatic bullets report measured changes only. The tool does not infer clinical corrections or semantic topic claims from counts. Imported manual historical sections outside markers are preserved.
 
-## Website integration later
+## Website integration and data ownership
 
-No website repository or deployment is changed. The Google Form remains the download gateway; package binaries never appear in website data. A future website build can copy/fetch only `website/releases.json` and render its history. Distinguish `latest_release_date` (newest candidate or published entry) from `latest_published_release_date`. For a live download page, filter to `publication_status == "published"` and display that version. Never auto-advertise a candidate as downloadable.
+The static website consumes only the public `website/` bundle. `website/deck-stats.json` and `website/tags.json` are generated from the newest normalized package snapshot; dates are explicit operator labels. Release records contain deterministic tag deltas alongside the existing counts and preserved editorial notes. The website refuses mixed dates/counts or a candidate bundle.
 
-Render the release date/version, total cards, public What's New bullets, previous version and full history. Once a user knows their installed version, they can compare it with the website's latest published date. Connect your existing Google Form URL and the final deployed changelog URL in the website itself. Neither URL was provided, so no download link was fabricated. The Markdown uses a repository-relative changelog link; adjust it when copying to another website route. No integration is tightly coupled to this codebase.
+Human-authored usage and update guidance lives in `docs/how-to-use.md` and `docs/updating.md`; generation copies it into `website/`. Maintain those source files, not the copies. `docs/usage-review.md` records historical mismatches and author TODOs. [Public data schema](docs/public-data-schema.md) defines every new field, count semantics, ordering and ownership.
+
+The website's `scripts/update_crabs_release.py website/releases.json` builds `/crabs/`, copies the small public bundle, and updates only the homepage's existing generated region. Its `--check` mode verifies byte equality without writing. The wrapper invokes both automatically for a published bundle. Do not copy `.apkg`, snapshots, audit reports or media to the website. The Google Form remains the download gateway.
 
 ## Optional future version card
 

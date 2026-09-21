@@ -1,0 +1,59 @@
+PASS: Baseline package — Read and integrity-checked; collection.anki21, metadata v2, SQLite schema 11; {'notes': 4094, 'cards': 5364, 'media': 2871}
+PASS: Baseline GUID uniqueness — 0 duplicate GUIDs
+PASS: Candidate package — Read and integrity-checked; collection.anki21b, metadata v3, SQLite schema 18; {'notes': 4224, 'cards': 5586, 'media': 3016}
+PASS: Candidate GUID uniqueness — 0 duplicate GUIDs
+PASS: Shared note GUIDs — 4041 notes match by GUID; 4041 also preserve numeric note ID
+WARNING: Deck identity/structure — 0 added, 1 removed, 0 changed deck definitions; compare names and IDs below
+PASS: Primary deck identity — Dominant baseline deck must retain its exact name, ID, and active cards
+WARNING: Note types/templates — 1 added, 0 removed, 0 modified note types
+WARNING: Deck moves — 1 retained cards moved; package import may preserve users’ current deck placement
+WARNING: Removed content — 53 notes and 69 cards absent in candidate. Importing an update does not reliably delete existing user content; review separately
+PASS: Modified-note timestamps — 0 changed notes are not newer than baseline; default If newer import can skip these
+WARNING: Field/template merge IDs — 94 field/template definitions lack merge IDs; newer Anki may fall back to names when merging
+WARNING: Import outcome limitation — Static audit only: user edits, import options, Anki version and note-type merging affect outcomes. No package has been imported. A clean separate test profile is recommended before publishing
+{
+  "old": {
+    "notes": 4094,
+    "cards": 5364,
+    "media": 2871
+  },
+  "new": {
+    "notes": 4224,
+    "cards": 5586,
+    "media": 3016
+  },
+  "notes_added": 183,
+  "notes_removed": 53,
+  "notes_updated": 451,
+  "notes_fields_updated": 255,
+  "notes_tags_only": 196,
+  "cards_added": 291,
+  "cards_removed": 69,
+  "cards_updated": 526,
+  "media_added": 193,
+  "media_removed": 48,
+  "media_updated": 0
+}
+Tags: 564 exact content tags; 604 hierarchy nodes; 0 untagged notes
+17 exact tags added; 17 exact tags removed.
+Crabs::Residency: +285 associated notes net (183 newly added; 0 removed; 442 modified retained notes associated before or after).
+Crabs::Procedures: +3 associated notes net (5 newly added; 1 removed; 243 modified retained notes associated before or after).
+Branch counts include descendants and overlap across branches; changes can reflect retagging as well as new content.
+
+Generated/verified:
+  snapshots/2026-06-20.json
+  snapshots/2026-09-21.json
+  reports/2026-06-20_to_2026-09-21.md
+  reports/2026-06-20_to_2026-09-21.checks.json
+  releases.json
+  website/releases.json
+  website/whats-new.md
+  CHANGELOG.md
+  website/deck-stats.json
+  website/tags.json
+  website/how-to-use.md
+  website/updating.md
+
+STOP FOR REVIEW. No Git staging, commit, push, publication or Anki import was performed.
+Candidate generated for review. Website unchanged: latest release is not marked published.
+Release workflow complete. Review outputs and Git diffs. Nothing committed, uploaded, or deployed.

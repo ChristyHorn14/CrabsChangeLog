@@ -1,9 +1,2034 @@
 {
   "latest_published_release_date": "2026-09-20",
-  "latest_release_date": "2026-09-20",
+  "latest_release_date": "2026-09-21",
   "previous_release_date": "2026-06-20",
   "project": "Crabs Anki Deck",
   "releases": [
+    {
+      "audit_status": "WARNING",
+      "changes": {
+        "cards_added": 291,
+        "cards_removed": 69,
+        "cards_updated": 526,
+        "media_added": 193,
+        "media_removed": 48,
+        "media_updated": 0,
+        "notes_added": 183,
+        "notes_fields_updated": 255,
+        "notes_removed": 53,
+        "notes_tags_only": 196,
+        "notes_updated": 451
+      },
+      "compatibility": "review_required",
+      "date": "2026-09-21",
+      "previous_release": "2026-06-20",
+      "publication_status": "candidate",
+      "tag_changes": {
+        "branches_added": [
+          "Crabs::Residency::FacialPlastics::LocalFlaps::Advancement",
+          "Crabs::Residency::FacialPlastics::LocalFlaps::Bilobe",
+          "Crabs::Residency::FacialPlastics::LocalFlaps::Interoplated",
+          "Crabs::Residency::FacialPlastics::LocalFlaps::Pivotal",
+          "Crabs::Residency::FacialPlastics::LocalFlaps::Transposition",
+          "Crabs::Residency::FacialPlastics::LocalFlaps:Rotation:DorsalNasal",
+          "Crabs::Residency::FacialPlastics::MohsRepair::Cheek",
+          "Crabs::Residency::FacialPlastics::MohsRepair::Ear",
+          "Crabs::Residency::FacialPlastics::MohsRepair::Nose",
+          "Crabs::Residency::General::PROMs",
+          "Crabs::Residency::Laryngology::Anatomy",
+          "Crabs::Residency::Laryngology::Stroboscopy",
+          "Crabs::Residency::Otology::Anatomy::Cochlea",
+          "Crabs::Residency::Otology::Anatomy::Ossicles",
+          "Crabs::Residency::Otology::AssistiveHearingDevicesHearingAids",
+          "Crabs::Residency::Otology::OtitisExternaFungal"
+        ],
+        "branches_removed": [
+          "Severe",
+          "Tags",
+          "anat",
+          "appearance",
+          "include",
+          "symptoms",
+          "toxic",
+          "…"
+        ],
+        "by_branch": [
+          {
+            "added_notes": 183,
+            "after_notes": 4224,
+            "before_notes": 4042,
+            "depth": 0,
+            "modified_notes": 451,
+            "net_notes": 182,
+            "path": "Crabs",
+            "removed_notes": 1
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 201,
+            "before_notes": 201,
+            "depth": 1,
+            "modified_notes": 12,
+            "net_notes": 0,
+            "path": "Crabs::AAOHNS_PrimaryCareOtolaryngology",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 15,
+            "before_notes": 15,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::AAOHNS_PrimaryCareOtolaryngology::Dizziness",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 18,
+            "before_notes": 18,
+            "depth": 2,
+            "modified_notes": 10,
+            "net_notes": 0,
+            "path": "Crabs::AAOHNS_PrimaryCareOtolaryngology::HearingLoss",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 17,
+            "before_notes": 17,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::AAOHNS_PrimaryCareOtolaryngology::OtitisMedia",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 84,
+            "before_notes": 84,
+            "depth": 1,
+            "modified_notes": 2,
+            "net_notes": 0,
+            "path": "Crabs::Index",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 2309,
+            "before_notes": 2310,
+            "depth": 1,
+            "modified_notes": 297,
+            "net_notes": -1,
+            "path": "Crabs::Pasha",
+            "removed_notes": 1
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 331,
+            "before_notes": 331,
+            "depth": 2,
+            "modified_notes": 178,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter1AllergyandRhinology",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 176,
+            "before_notes": 176,
+            "depth": 3,
+            "modified_notes": 176,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter1AllergyandRhinology::AnatomyoftheNoseandParanasalSinuses",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 12,
+            "before_notes": 12,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter1AllergyandRhinology::PhysiologyoftheNoseandParanasalSinuses",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 40,
+            "before_notes": 40,
+            "depth": 3,
+            "modified_notes": 6,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter1AllergyandRhinology::SinusSurgery",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 214,
+            "before_notes": 214,
+            "depth": 2,
+            "modified_notes": 3,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter2Laryngology",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 25,
+            "before_notes": 25,
+            "depth": 3,
+            "modified_notes": 2,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter2Laryngology::NeurogenicandOtherVocalPathologies",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 19,
+            "before_notes": 19,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter2Laryngology::TheHoarseDysphonicPatient",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 70,
+            "before_notes": 70,
+            "depth": 2,
+            "modified_notes": 3,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter3OtolaryngologicEndocrinology",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 19,
+            "before_notes": 19,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter3OtolaryngologicEndocrinology::Parathyroids",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 51,
+            "before_notes": 51,
+            "depth": 3,
+            "modified_notes": 2,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter3OtolaryngologicEndocrinology::Thyroid",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 270,
+            "before_notes": 270,
+            "depth": 2,
+            "modified_notes": 2,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter5GeneralOtolaryngology",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 35,
+            "before_notes": 35,
+            "depth": 3,
+            "modified_notes": 2,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter5GeneralOtolaryngology::SalivaryGlandAnatomyandPhysiology",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 318,
+            "before_notes": 318,
+            "depth": 2,
+            "modified_notes": 10,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter6HeadandNeckCancer",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 59,
+            "before_notes": 59,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter6HeadandNeckCancer::CanceroftheNeck",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 9,
+            "before_notes": 9,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter6HeadandNeckCancer::HypopharyngealCancer",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 60,
+            "before_notes": 60,
+            "depth": 3,
+            "modified_notes": 6,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter6HeadandNeckCancer::LaryngealCancer",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 78,
+            "before_notes": 78,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter6HeadandNeckCancer::NasalandParanasalCancer",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 10,
+            "before_notes": 10,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter6HeadandNeckCancer::NasopharyngealCancerNPC",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 16,
+            "before_notes": 16,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter6HeadandNeckCancer::OtherHeadandNeckNeoplasms",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 368,
+            "before_notes": 370,
+            "depth": 2,
+            "modified_notes": 84,
+            "net_notes": -2,
+            "path": "Crabs::Pasha::Chapter7OtologyandNeurotology",
+            "removed_notes": 1
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 124,
+            "before_notes": 124,
+            "depth": 3,
+            "modified_notes": 55,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter7OtologyandNeurotology::AnatomyEmbryologyandPhysiologyofHearingandBalance",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 15,
+            "before_notes": 15,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter7OtologyandNeurotology::ApproachtoHearingLossandTinnitus",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 19,
+            "before_notes": 20,
+            "depth": 3,
+            "modified_notes": 19,
+            "net_notes": -1,
+            "path": "Crabs::Pasha::Chapter7OtologyandNeurotology::AudiologyandHearingDevices",
+            "removed_notes": 1
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 58,
+            "before_notes": 58,
+            "depth": 3,
+            "modified_notes": 2,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter7OtologyandNeurotology::InfectionsoftheEarandTemporalBone",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 67,
+            "before_notes": 67,
+            "depth": 3,
+            "modified_notes": 3,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter7OtologyandNeurotology::NoninfectiousDisordersoftheEarandTemporalBone",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 60,
+            "before_notes": 61,
+            "depth": 3,
+            "modified_notes": 4,
+            "net_notes": -1,
+            "path": "Crabs::Pasha::Chapter7OtologyandNeurotology::TheFacialNerve",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 42,
+            "before_notes": 42,
+            "depth": 3,
+            "modified_notes": 3,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter7OtologyandNeurotology::VestibularPathology",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 341,
+            "before_notes": 341,
+            "depth": 2,
+            "modified_notes": 20,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter8ReconstructiveandFacialPlasticSurgery",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 35,
+            "before_notes": 35,
+            "depth": 3,
+            "modified_notes": 3,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter8ReconstructiveandFacialPlasticSurgery::FacialReconstructionTechniques",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 10,
+            "before_notes": 10,
+            "depth": 3,
+            "modified_notes": 4,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter8ReconstructiveandFacialPlasticSurgery::ForeheadLiftandBrowLift",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 71,
+            "before_notes": 71,
+            "depth": 3,
+            "modified_notes": 4,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter8ReconstructiveandFacialPlasticSurgery::HeadandNeckReconstructiveFlaps",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 56,
+            "before_notes": 56,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter8ReconstructiveandFacialPlasticSurgery::Rhinoplasty",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 36,
+            "before_notes": 36,
+            "depth": 3,
+            "modified_notes": 10,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter8ReconstructiveandFacialPlasticSurgery::RhytidoplastyRhytidectomyFacelift",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 381,
+            "before_notes": 381,
+            "depth": 2,
+            "modified_notes": 3,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter9PediatricOtolaryngology",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 102,
+            "before_notes": 102,
+            "depth": 3,
+            "modified_notes": 3,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter9PediatricOtolaryngology::PediatricOtology",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 58,
+            "before_notes": 58,
+            "depth": 4,
+            "modified_notes": 2,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter9PediatricOtolaryngology::PediatricOtology::Hearing",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 64,
+            "before_notes": 64,
+            "depth": 1,
+            "modified_notes": 7,
+            "net_notes": 0,
+            "path": "Crabs::Pimped",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 5,
+            "after_notes": 1067,
+            "before_notes": 1064,
+            "depth": 1,
+            "modified_notes": 243,
+            "net_notes": 3,
+            "path": "Crabs::Procedures",
+            "removed_notes": 1
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 3,
+            "before_notes": 3,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::BrowLift",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 4,
+            "before_notes": 5,
+            "depth": 2,
+            "modified_notes": 0,
+            "net_notes": -1,
+            "path": "Crabs::Procedures::CochlearImplant",
+            "removed_notes": 1
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 37,
+            "before_notes": 37,
+            "depth": 2,
+            "modified_notes": 7,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::Dacryocystorhinostomy",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 162,
+            "before_notes": 162,
+            "depth": 2,
+            "modified_notes": 130,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::EndoscopicSinusSurgery",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 20,
+            "before_notes": 20,
+            "depth": 3,
+            "modified_notes": 11,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::EndoscopicSinusSurgery::FrontalSinusotomy(Draf)",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 39,
+            "before_notes": 39,
+            "depth": 2,
+            "modified_notes": 15,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::Facelift",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 69,
+            "before_notes": 69,
+            "depth": 2,
+            "modified_notes": 13,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::Flaps",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 15,
+            "before_notes": 15,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::Flaps::LocalFlaps",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 13,
+            "before_notes": 13,
+            "depth": 4,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::Flaps::LocalFlaps::GilliesFanFlap",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 13,
+            "before_notes": 13,
+            "depth": 4,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::Flaps::LocalFlaps::KarapandzicFlap",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 12,
+            "before_notes": 12,
+            "depth": 3,
+            "modified_notes": 12,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::Flaps::ParamedianForeheadFlap",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 9,
+            "before_notes": 9,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::MastoidSurgery",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 43,
+            "before_notes": 43,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::MedializationLaryngoplastyArytenoidAdduction",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 28,
+            "before_notes": 28,
+            "depth": 2,
+            "modified_notes": 25,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::MyringoplastyTympanoplasty",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 58,
+            "before_notes": 58,
+            "depth": 2,
+            "modified_notes": 2,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::NeckDissection",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 9,
+            "before_notes": 9,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::NeckDissection::Central",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 31,
+            "before_notes": 31,
+            "depth": 2,
+            "modified_notes": 10,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::PETubePlacement",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 19,
+            "before_notes": 19,
+            "depth": 2,
+            "modified_notes": 2,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::Parathyroidectomy",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 4,
+            "before_notes": 4,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::PosteriorNasalNeurectomy",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 7,
+            "before_notes": 7,
+            "depth": 2,
+            "modified_notes": 3,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::ReconstructionAfterSkullBaseSurgery",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 52,
+            "before_notes": 52,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::Rhinoplasty",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 18,
+            "before_notes": 18,
+            "depth": 2,
+            "modified_notes": 5,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::Septoplasty",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 12,
+            "before_notes": 12,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::SistrunkThyroglossalDuctCyst",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 5,
+            "after_notes": 22,
+            "before_notes": 17,
+            "depth": 2,
+            "modified_notes": 2,
+            "net_notes": 5,
+            "path": "Crabs::Procedures::Thyroidectomy",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 55,
+            "before_notes": 55,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::TotalMaxillectomyOrbitalExenteration",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 53,
+            "before_notes": 53,
+            "depth": 2,
+            "modified_notes": 31,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::TranscranialEndonasalApproachesAnteriorCranialBase",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 42,
+            "before_notes": 42,
+            "depth": 2,
+            "modified_notes": 4,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::TransoralLaserMicrosurgeryLaryngealCancer",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 32,
+            "before_notes": 32,
+            "depth": 2,
+            "modified_notes": 23,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::TranssphenoidalApproachToPituitary",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 14,
+            "before_notes": 14,
+            "depth": 2,
+            "modified_notes": 2,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::TurbinateReduction",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 15,
+            "before_notes": 15,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::VocalFoldInjection",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 183,
+            "after_notes": 3440,
+            "before_notes": 3155,
+            "depth": 1,
+            "modified_notes": 442,
+            "net_notes": 285,
+            "path": "Crabs::Residency",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 13,
+            "after_notes": 328,
+            "before_notes": 284,
+            "depth": 2,
+            "modified_notes": 49,
+            "net_notes": 44,
+            "path": "Crabs::Residency::FacialPlastics",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 26,
+            "before_notes": 14,
+            "depth": 3,
+            "modified_notes": 18,
+            "net_notes": 12,
+            "path": "Crabs::Residency::FacialPlastics::Anatomy",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 18,
+            "before_notes": 18,
+            "depth": 3,
+            "modified_notes": 4,
+            "net_notes": 0,
+            "path": "Crabs::Residency::FacialPlastics::Facelift",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 9,
+            "before_notes": 9,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Residency::FacialPlastics::FacialAnalysis",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 35,
+            "before_notes": 35,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Residency::FacialPlastics::FacialNerveParalysis",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 7,
+            "after_notes": 49,
+            "before_notes": 27,
+            "depth": 3,
+            "modified_notes": 16,
+            "net_notes": 22,
+            "path": "Crabs::Residency::FacialPlastics::LocalFlaps",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 1,
+            "after_notes": 1,
+            "before_notes": 0,
+            "depth": 4,
+            "modified_notes": 0,
+            "net_notes": 1,
+            "path": "Crabs::Residency::FacialPlastics::LocalFlaps::Advancement",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 2,
+            "after_notes": 3,
+            "before_notes": 0,
+            "depth": 4,
+            "modified_notes": 1,
+            "net_notes": 3,
+            "path": "Crabs::Residency::FacialPlastics::LocalFlaps::Bilobe",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 12,
+            "before_notes": 0,
+            "depth": 4,
+            "modified_notes": 12,
+            "net_notes": 12,
+            "path": "Crabs::Residency::FacialPlastics::LocalFlaps::Interoplated",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 12,
+            "before_notes": 0,
+            "depth": 5,
+            "modified_notes": 12,
+            "net_notes": 12,
+            "path": "Crabs::Residency::FacialPlastics::LocalFlaps::Interoplated::ParamedianForehead",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 2,
+            "after_notes": 4,
+            "before_notes": 0,
+            "depth": 4,
+            "modified_notes": 2,
+            "net_notes": 4,
+            "path": "Crabs::Residency::FacialPlastics::LocalFlaps::Pivotal",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 1,
+            "after_notes": 3,
+            "before_notes": 0,
+            "depth": 5,
+            "modified_notes": 2,
+            "net_notes": 3,
+            "path": "Crabs::Residency::FacialPlastics::LocalFlaps::Pivotal::Rhombic",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 2,
+            "after_notes": 3,
+            "before_notes": 0,
+            "depth": 4,
+            "modified_notes": 1,
+            "net_notes": 3,
+            "path": "Crabs::Residency::FacialPlastics::LocalFlaps::Transposition",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 2,
+            "after_notes": 2,
+            "before_notes": 0,
+            "depth": 3,
+            "modified_notes": 0,
+            "net_notes": 2,
+            "path": "Crabs::Residency::FacialPlastics::LocalFlaps:Rotation:DorsalNasal",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 5,
+            "after_notes": 16,
+            "before_notes": 8,
+            "depth": 3,
+            "modified_notes": 10,
+            "net_notes": 8,
+            "path": "Crabs::Residency::FacialPlastics::MohsRepair",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 4,
+            "after_notes": 7,
+            "before_notes": 0,
+            "depth": 4,
+            "modified_notes": 3,
+            "net_notes": 7,
+            "path": "Crabs::Residency::FacialPlastics::MohsRepair::Cheek",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 1,
+            "before_notes": 0,
+            "depth": 4,
+            "modified_notes": 1,
+            "net_notes": 1,
+            "path": "Crabs::Residency::FacialPlastics::MohsRepair::Ear",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 1,
+            "after_notes": 7,
+            "before_notes": 0,
+            "depth": 4,
+            "modified_notes": 6,
+            "net_notes": 7,
+            "path": "Crabs::Residency::FacialPlastics::MohsRepair::Nose",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 37,
+            "before_notes": 36,
+            "depth": 3,
+            "modified_notes": 3,
+            "net_notes": 1,
+            "path": "Crabs::Residency::FacialPlastics::Rhinoplasty",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 2,
+            "after_notes": 77,
+            "before_notes": 71,
+            "depth": 2,
+            "modified_notes": 5,
+            "net_notes": 6,
+            "path": "Crabs::Residency::General",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 11,
+            "before_notes": 11,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Residency::General::Billing",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 2,
+            "after_notes": 6,
+            "before_notes": 0,
+            "depth": 3,
+            "modified_notes": 4,
+            "net_notes": 6,
+            "path": "Crabs::Residency::General::PROMs",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 12,
+            "after_notes": 157,
+            "before_notes": 144,
+            "depth": 2,
+            "modified_notes": 4,
+            "net_notes": 13,
+            "path": "Crabs::Residency::HN",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 2,
+            "before_notes": 2,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Residency::HN::SinonasalUndifferentiatedCarcinomaSNUC",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 7,
+            "after_notes": 7,
+            "before_notes": 2,
+            "depth": 3,
+            "modified_notes": 2,
+            "net_notes": 5,
+            "path": "Crabs::Residency::HN::ThyroidDisease",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 3,
+            "before_notes": 1,
+            "depth": 3,
+            "modified_notes": 2,
+            "net_notes": 2,
+            "path": "Crabs::Residency::HN::ThyroidDisorders",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 5,
+            "after_notes": 10,
+            "before_notes": 4,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 6,
+            "path": "Crabs::Residency::HN::Thyroidectomy",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 2,
+            "after_notes": 103,
+            "before_notes": 97,
+            "depth": 2,
+            "modified_notes": 6,
+            "net_notes": 6,
+            "path": "Crabs::Residency::Laryngology",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 4,
+            "before_notes": 0,
+            "depth": 3,
+            "modified_notes": 4,
+            "net_notes": 4,
+            "path": "Crabs::Residency::Laryngology::Anatomy",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 7,
+            "before_notes": 7,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Residency::Laryngology::Dysphonia",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 2,
+            "after_notes": 2,
+            "before_notes": 0,
+            "depth": 3,
+            "modified_notes": 0,
+            "net_notes": 2,
+            "path": "Crabs::Residency::Laryngology::Stroboscopy",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 3,
+            "before_notes": 3,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Residency::Laryngology::VoicePhysiology",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 148,
+            "after_notes": 667,
+            "before_notes": 446,
+            "depth": 2,
+            "modified_notes": 182,
+            "net_notes": 221,
+            "path": "Crabs::Residency::Otology",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 84,
+            "after_notes": 378,
+            "before_notes": 245,
+            "depth": 3,
+            "modified_notes": 138,
+            "net_notes": 133,
+            "path": "Crabs::Residency::Otology::Anatomy",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 219,
+            "before_notes": 219,
+            "depth": 4,
+            "modified_notes": 73,
+            "net_notes": 0,
+            "path": "Crabs::Residency::Otology::Anatomy::CT",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 44,
+            "after_notes": 48,
+            "before_notes": 0,
+            "depth": 4,
+            "modified_notes": 4,
+            "net_notes": 48,
+            "path": "Crabs::Residency::Otology::Anatomy::Cochlea",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 36,
+            "after_notes": 36,
+            "before_notes": 0,
+            "depth": 4,
+            "modified_notes": 0,
+            "net_notes": 36,
+            "path": "Crabs::Residency::Otology::Anatomy::Ossicles",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 23,
+            "after_notes": 30,
+            "before_notes": 7,
+            "depth": 3,
+            "modified_notes": 3,
+            "net_notes": 23,
+            "path": "Crabs::Residency::Otology::AnatomyPhysiologyofHearing",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 6,
+            "after_notes": 19,
+            "before_notes": 11,
+            "depth": 3,
+            "modified_notes": 3,
+            "net_notes": 8,
+            "path": "Crabs::Residency::Otology::AssessmentofAudiologicFunctionHearingFunction",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 17,
+            "after_notes": 39,
+            "before_notes": 0,
+            "depth": 3,
+            "modified_notes": 22,
+            "net_notes": 39,
+            "path": "Crabs::Residency::Otology::AssistiveHearingDevicesHearingAids",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 1,
+            "before_notes": 1,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Residency::Otology::Audiometry",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 4,
+            "before_notes": 4,
+            "depth": 3,
+            "modified_notes": 3,
+            "net_notes": 0,
+            "path": "Crabs::Residency::Otology::AuditoryNeuropathySpectrumDisorderANSD",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 12,
+            "before_notes": 12,
+            "depth": 3,
+            "modified_notes": 2,
+            "net_notes": 0,
+            "path": "Crabs::Residency::Otology::CerebellopontineAngleCPATumors",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 8,
+            "after_notes": 18,
+            "before_notes": 9,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 9,
+            "path": "Crabs::Residency::Otology::Cholesteatoma",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 16,
+            "after_notes": 26,
+            "before_notes": 10,
+            "depth": 3,
+            "modified_notes": 0,
+            "net_notes": 16,
+            "path": "Crabs::Residency::Otology::CochlearImplantsCI",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 12,
+            "before_notes": 12,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Residency::Otology::EustachianTubeDysfunctionETD",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 12,
+            "before_notes": 12,
+            "depth": 3,
+            "modified_notes": 3,
+            "net_notes": 0,
+            "path": "Crabs::Residency::Otology::MalignantOtitisExterna",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 1,
+            "after_notes": 2,
+            "before_notes": 1,
+            "depth": 3,
+            "modified_notes": 0,
+            "net_notes": 1,
+            "path": "Crabs::Residency::Otology::Mastoidectomy",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 1,
+            "after_notes": 5,
+            "before_notes": 0,
+            "depth": 3,
+            "modified_notes": 4,
+            "net_notes": 5,
+            "path": "Crabs::Residency::Otology::OtitisExternaFungal",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 8,
+            "before_notes": 8,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Residency::Otology::Otosclerosis",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 1,
+            "after_notes": 10,
+            "before_notes": 9,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 1,
+            "path": "Crabs::Residency::Otology::PeripheralVestibularDisorders",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 5,
+            "after_notes": 8,
+            "before_notes": 3,
+            "depth": 3,
+            "modified_notes": 0,
+            "net_notes": 5,
+            "path": "Crabs::Residency::Otology::PulsatileTinnitus",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 1,
+            "before_notes": 1,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Residency::Otology::SingleSidedDeafness",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 6,
+            "after_notes": 7,
+            "before_notes": 1,
+            "depth": 3,
+            "modified_notes": 0,
+            "net_notes": 6,
+            "path": "Crabs::Residency::Otology::SubjectiveTinnitus",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 8,
+            "after_notes": 16,
+            "before_notes": 6,
+            "depth": 3,
+            "modified_notes": 5,
+            "net_notes": 10,
+            "path": "Crabs::Residency::Otology::SuperiorSemicircularCanalDehiscenceSSCD",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 11,
+            "before_notes": 11,
+            "depth": 3,
+            "modified_notes": 5,
+            "net_notes": 0,
+            "path": "Crabs::Residency::Otology::Tympanoplasty",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 1,
+            "after_notes": 12,
+            "before_notes": 11,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 1,
+            "path": "Crabs::Residency::Otology::VestibularTesting",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 32,
+            "before_notes": 32,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Residency::Peds",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 6,
+            "before_notes": 6,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Residency::Peds::AcuteOtitisMediaAOM",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 8,
+            "after_notes": 263,
+            "before_notes": 78,
+            "depth": 2,
+            "modified_notes": 178,
+            "net_notes": 185,
+            "path": "Crabs::Residency::Rhinology",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 185,
+            "before_notes": 8,
+            "depth": 3,
+            "modified_notes": 177,
+            "net_notes": 177,
+            "path": "Crabs::Residency::Rhinology::Anatomy",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 8,
+            "after_notes": 12,
+            "before_notes": 3,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 9,
+            "path": "Crabs::Residency::Rhinology::ChronicRhinosinusitiswithNasalPolyposisCRSwNP",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 2,
+            "before_notes": 2,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Residency::Rhinology::FrontalSinusAnatomy",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 76,
+            "before_notes": 76,
+            "depth": 2,
+            "modified_notes": 3,
+            "net_notes": 0,
+            "path": "Crabs::Residency::Trauma",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 9,
+            "before_notes": 9,
+            "depth": 3,
+            "modified_notes": 2,
+            "net_notes": 0,
+            "path": "Crabs::Residency::Trauma::FrontalSinusFracture",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 19,
+            "before_notes": 19,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Residency::Trauma::MandibleFracture",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 3506,
+            "before_notes": 3507,
+            "depth": 1,
+            "modified_notes": 349,
+            "net_notes": -1,
+            "path": "Crabs::Specialty",
+            "removed_notes": 1
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 635,
+            "before_notes": 635,
+            "depth": 2,
+            "modified_notes": 45,
+            "net_notes": 0,
+            "path": "Crabs::Specialty::FacialPlastics",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 2294,
+            "before_notes": 2296,
+            "depth": 2,
+            "modified_notes": 254,
+            "net_notes": -2,
+            "path": "Crabs::Specialty::General",
+            "removed_notes": 1
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 706,
+            "before_notes": 706,
+            "depth": 2,
+            "modified_notes": 13,
+            "net_notes": 0,
+            "path": "Crabs::Specialty::HN",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 309,
+            "before_notes": 309,
+            "depth": 2,
+            "modified_notes": 9,
+            "net_notes": 0,
+            "path": "Crabs::Specialty::Laryngology",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 38,
+            "before_notes": 38,
+            "depth": 2,
+            "modified_notes": 6,
+            "net_notes": 0,
+            "path": "Crabs::Specialty::Otology",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 414,
+            "before_notes": 415,
+            "depth": 2,
+            "modified_notes": 84,
+            "net_notes": -1,
+            "path": "Crabs::Specialty::OtologyNeurotology",
+            "removed_notes": 1
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 512,
+            "before_notes": 512,
+            "depth": 2,
+            "modified_notes": 51,
+            "net_notes": 0,
+            "path": "Crabs::Specialty::Peds",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 449,
+            "before_notes": 449,
+            "depth": 2,
+            "modified_notes": 181,
+            "net_notes": 0,
+            "path": "Crabs::Specialty::Rhinology",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 125,
+            "before_notes": 125,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Specialty::Trauma",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 510,
+            "before_notes": 510,
+            "depth": 1,
+            "modified_notes": 69,
+            "net_notes": 0,
+            "path": "Crabs::Sub-I",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 60,
+            "before_notes": 60,
+            "depth": 1,
+            "modified_notes": 6,
+            "net_notes": 0,
+            "path": "Crabs::duplicates_didnt_study",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 865,
+            "before_notes": 865,
+            "depth": 1,
+            "modified_notes": 167,
+            "net_notes": 0,
+            "path": "Crabs::elective",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 500,
+            "before_notes": 500,
+            "depth": 1,
+            "modified_notes": 218,
+            "net_notes": 0,
+            "path": "Crabs::extra_anatomy",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 1072,
+            "before_notes": 1073,
+            "depth": 1,
+            "modified_notes": 55,
+            "net_notes": -1,
+            "path": "Crabs::secrets_ent",
+            "removed_notes": 1
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 14,
+            "before_notes": 14,
+            "depth": 2,
+            "modified_notes": 4,
+            "net_notes": 0,
+            "path": "Crabs::secrets_ent::Benign_Vocal_Fold_Lesions_And_Microsurgery",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 8,
+            "before_notes": 8,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::secrets_ent::Cholesteatoma",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 27,
+            "before_notes": 27,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::secrets_ent::Diseases_Of_The_Salivary_Glands",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 24,
+            "before_notes": 24,
+            "depth": 2,
+            "modified_notes": 12,
+            "net_notes": 0,
+            "path": "Crabs::secrets_ent::Evaluation_Of_Hearing",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 20,
+            "before_notes": 20,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::secrets_ent::Evaluation_Of_The_Vestibular_System_And_Vestibular_Disorders",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 39,
+            "before_notes": 39,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::secrets_ent::Facial_Nerve",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 4,
+            "before_notes": 5,
+            "depth": 2,
+            "modified_notes": 4,
+            "net_notes": -1,
+            "path": "Crabs::secrets_ent::HearingAidsImplantableDevices",
+            "removed_notes": 1
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 15,
+            "before_notes": 15,
+            "depth": 2,
+            "modified_notes": 3,
+            "net_notes": 0,
+            "path": "Crabs::secrets_ent::Hearing_Loss_And_Ototoxicity",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 27,
+            "before_notes": 27,
+            "depth": 2,
+            "modified_notes": 2,
+            "net_notes": 0,
+            "path": "Crabs::secrets_ent::Infections_Of_The_Ear",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 33,
+            "before_notes": 33,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::secrets_ent::Neck_Dissection",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 8,
+            "before_notes": 8,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::secrets_ent::Orbital_Surgery",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 33,
+            "before_notes": 33,
+            "depth": 2,
+            "modified_notes": 4,
+            "net_notes": 0,
+            "path": "Crabs::secrets_ent::Otology_Anatomy_And_Embryology_With_Radiology_Correlates",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 68,
+            "before_notes": 68,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::secrets_ent::Plastic_Surgery",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 14,
+            "before_notes": 14,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::secrets_ent::Rhinoplasty_And_Nasal_Reconstruction",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 11,
+            "before_notes": 11,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::secrets_ent::Septoplasty_And_Turbinate_Surgery",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 16,
+            "before_notes": 16,
+            "depth": 2,
+            "modified_notes": 16,
+            "net_notes": 0,
+            "path": "Crabs::secrets_ent::Sinonasal_Anatomy_And_Embryology_With_Radiology_Correlates",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 2,
+            "before_notes": 2,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::secrets_ent::Surgery_For_Vertigo",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 0,
+            "before_notes": 1,
+            "depth": 0,
+            "modified_notes": 0,
+            "net_notes": -1,
+            "path": "Severe",
+            "removed_notes": 1
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 0,
+            "before_notes": 1,
+            "depth": 0,
+            "modified_notes": 0,
+            "net_notes": -1,
+            "path": "Tags",
+            "removed_notes": 1
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 0,
+            "before_notes": 51,
+            "depth": 0,
+            "modified_notes": 51,
+            "net_notes": -51,
+            "path": "anat",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 0,
+            "before_notes": 1,
+            "depth": 0,
+            "modified_notes": 0,
+            "net_notes": -1,
+            "path": "appearance",
+            "removed_notes": 1
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 0,
+            "before_notes": 1,
+            "depth": 0,
+            "modified_notes": 0,
+            "net_notes": -1,
+            "path": "include",
+            "removed_notes": 1
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 0,
+            "before_notes": 1,
+            "depth": 0,
+            "modified_notes": 0,
+            "net_notes": -1,
+            "path": "symptoms",
+            "removed_notes": 1
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 0,
+            "before_notes": 1,
+            "depth": 0,
+            "modified_notes": 0,
+            "net_notes": -1,
+            "path": "toxic",
+            "removed_notes": 1
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 0,
+            "before_notes": 23,
+            "depth": 0,
+            "modified_notes": 1,
+            "net_notes": -23,
+            "path": "…",
+            "removed_notes": 22
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 0,
+            "before_notes": 1,
+            "depth": 1,
+            "modified_notes": 1,
+            "net_notes": -1,
+            "path": "…::CranioOrbitalFractures",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 0,
+            "before_notes": 22,
+            "depth": 1,
+            "modified_notes": 0,
+            "net_notes": -22,
+            "path": "…::Plastics",
+            "removed_notes": 22
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 0,
+            "before_notes": 22,
+            "depth": 1,
+            "modified_notes": 0,
+            "net_notes": -22,
+            "path": "…::PlasticsTrauma",
+            "removed_notes": 22
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 0,
+            "before_notes": 22,
+            "depth": 1,
+            "modified_notes": 0,
+            "net_notes": -22,
+            "path": "…::Residency",
+            "removed_notes": 22
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 0,
+            "before_notes": 22,
+            "depth": 1,
+            "modified_notes": 0,
+            "net_notes": -22,
+            "path": "…::Rhinoplasty",
+            "removed_notes": 22
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 0,
+            "before_notes": 22,
+            "depth": 1,
+            "modified_notes": 0,
+            "net_notes": -22,
+            "path": "…::Rhinoplasty_And_Nasal_Reconstruction",
+            "removed_notes": 22
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 0,
+            "before_notes": 1,
+            "depth": 1,
+            "modified_notes": 1,
+            "net_notes": -1,
+            "path": "…::Trauma",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 0,
+            "before_notes": 1,
+            "depth": 1,
+            "modified_notes": 1,
+            "net_notes": -1,
+            "path": "…::ZygomaticomaxillaryandOrbitalFractures",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 0,
+            "before_notes": 23,
+            "depth": 1,
+            "modified_notes": 1,
+            "net_notes": -23,
+            "path": "…::elective",
+            "removed_notes": 22
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 0,
+            "before_notes": 1,
+            "depth": 1,
+            "modified_notes": 1,
+            "net_notes": -1,
+            "path": "…::facial_trauma",
+            "removed_notes": 0
+          }
+        ],
+        "count_unit": "notes",
+        "schema": 1,
+        "tags_added": [
+          "Crabs::Residency::FacialPlastics::LocalFlaps::Advancement",
+          "Crabs::Residency::FacialPlastics::LocalFlaps::Bilobe",
+          "Crabs::Residency::FacialPlastics::LocalFlaps::Interoplated::ParamedianForehead",
+          "Crabs::Residency::FacialPlastics::LocalFlaps::Pivotal",
+          "Crabs::Residency::FacialPlastics::LocalFlaps::Pivotal::Rhombic",
+          "Crabs::Residency::FacialPlastics::LocalFlaps::Transposition",
+          "Crabs::Residency::FacialPlastics::LocalFlaps:Rotation:DorsalNasal",
+          "Crabs::Residency::FacialPlastics::MohsRepair::Cheek",
+          "Crabs::Residency::FacialPlastics::MohsRepair::Ear",
+          "Crabs::Residency::FacialPlastics::MohsRepair::Nose",
+          "Crabs::Residency::General::PROMs",
+          "Crabs::Residency::Laryngology::Anatomy",
+          "Crabs::Residency::Laryngology::Stroboscopy",
+          "Crabs::Residency::Otology::Anatomy::Cochlea",
+          "Crabs::Residency::Otology::Anatomy::Ossicles",
+          "Crabs::Residency::Otology::AssistiveHearingDevicesHearingAids",
+          "Crabs::Residency::Otology::OtitisExternaFungal"
+        ],
+        "tags_removed": [
+          "Severe",
+          "Tags",
+          "anat",
+          "appearance",
+          "include",
+          "symptoms",
+          "toxic",
+          "…::CranioOrbitalFractures",
+          "…::Plastics",
+          "…::PlasticsTrauma",
+          "…::Residency",
+          "…::Rhinoplasty",
+          "…::Rhinoplasty_And_Nasal_Reconstruction",
+          "…::Trauma",
+          "…::ZygomaticomaxillaryandOrbitalFractures",
+          "…::elective",
+          "…::facial_trauma"
+        ]
+      },
+      "total_cards": 5586,
+      "total_media": 3016,
+      "total_notes": 4224,
+      "version": "2026-09-21",
+      "whats_new": [
+        "291 cards added; 526 existing cards updated; 69 cards removed from the package.",
+        "183 notes added; 451 notes updated (255 with field edits, 196 tags only); 53 notes removed from the package.",
+        "193 media files added; 48 removed; 0 existing media files changed.",
+        "17 exact tags added; 17 exact tags removed.",
+        "Crabs::Residency: +285 associated notes net (183 newly added; 0 removed; 442 modified retained notes associated before or after).",
+        "Crabs::Procedures: +3 associated notes net (5 newly added; 1 removed; 243 modified retained notes associated before or after).",
+        "Branch counts include descendants and overlap across branches; changes can reflect retagging as well as new content."
+      ]
+    },
     {
       "audit_status": "WARNING",
       "changes": {
@@ -23,6 +2048,1755 @@
       "date": "2026-09-20",
       "previous_release": "2026-06-20",
       "publication_status": "published",
+      "tag_changes": {
+        "branches_added": [
+          "Anatomy",
+          "Crabs::Residency::FacialPlastics::LocalFlaps::Advancement",
+          "Crabs::Residency::FacialPlastics::LocalFlaps::Bilobe",
+          "Crabs::Residency::FacialPlastics::LocalFlaps::Interoplated",
+          "Crabs::Residency::FacialPlastics::LocalFlaps::Pivotal",
+          "Crabs::Residency::FacialPlastics::LocalFlaps::Transposition",
+          "Crabs::Residency::FacialPlastics::LocalFlaps:Rotation:DorsalNasal",
+          "Crabs::Residency::FacialPlastics::MohsRepair::Cheek",
+          "Crabs::Residency::FacialPlastics::MohsRepair::Ear",
+          "Crabs::Residency::FacialPlastics::MohsRepair::Nose",
+          "Crabs::Residency::General::PROMs",
+          "Crabs::Residency::Laryngology::Stroboscopy",
+          "Crabs::Residency::Otology::Anatomy::Cochlea",
+          "Crabs::Residency::Otology::Anatomy::Ossicles",
+          "Crabs::Residency::Otology::AssistiveHearingDevicesHearingAids",
+          "Crabs::Residency::Otology::OtitisExternaFungal"
+        ],
+        "branches_removed": [
+          "Tags"
+        ],
+        "by_branch": [
+          {
+            "added_notes": 0,
+            "after_notes": 1,
+            "before_notes": 0,
+            "depth": 0,
+            "modified_notes": 1,
+            "net_notes": 1,
+            "path": "Anatomy",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 183,
+            "after_notes": 4224,
+            "before_notes": 4042,
+            "depth": 0,
+            "modified_notes": 399,
+            "net_notes": 182,
+            "path": "Crabs",
+            "removed_notes": 1
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 201,
+            "before_notes": 201,
+            "depth": 1,
+            "modified_notes": 12,
+            "net_notes": 0,
+            "path": "Crabs::AAOHNS_PrimaryCareOtolaryngology",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 15,
+            "before_notes": 15,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::AAOHNS_PrimaryCareOtolaryngology::Dizziness",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 18,
+            "before_notes": 18,
+            "depth": 2,
+            "modified_notes": 10,
+            "net_notes": 0,
+            "path": "Crabs::AAOHNS_PrimaryCareOtolaryngology::HearingLoss",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 17,
+            "before_notes": 17,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::AAOHNS_PrimaryCareOtolaryngology::OtitisMedia",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 84,
+            "before_notes": 84,
+            "depth": 1,
+            "modified_notes": 2,
+            "net_notes": 0,
+            "path": "Crabs::Index",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 2309,
+            "before_notes": 2310,
+            "depth": 1,
+            "modified_notes": 246,
+            "net_notes": -1,
+            "path": "Crabs::Pasha",
+            "removed_notes": 1
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 331,
+            "before_notes": 331,
+            "depth": 2,
+            "modified_notes": 178,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter1AllergyandRhinology",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 176,
+            "before_notes": 176,
+            "depth": 3,
+            "modified_notes": 176,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter1AllergyandRhinology::AnatomyoftheNoseandParanasalSinuses",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 12,
+            "before_notes": 12,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter1AllergyandRhinology::PhysiologyoftheNoseandParanasalSinuses",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 40,
+            "before_notes": 40,
+            "depth": 3,
+            "modified_notes": 6,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter1AllergyandRhinology::SinusSurgery",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 214,
+            "before_notes": 214,
+            "depth": 2,
+            "modified_notes": 3,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter2Laryngology",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 25,
+            "before_notes": 25,
+            "depth": 3,
+            "modified_notes": 2,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter2Laryngology::NeurogenicandOtherVocalPathologies",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 19,
+            "before_notes": 19,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter2Laryngology::TheHoarseDysphonicPatient",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 70,
+            "before_notes": 70,
+            "depth": 2,
+            "modified_notes": 3,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter3OtolaryngologicEndocrinology",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 19,
+            "before_notes": 19,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter3OtolaryngologicEndocrinology::Parathyroids",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 51,
+            "before_notes": 51,
+            "depth": 3,
+            "modified_notes": 2,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter3OtolaryngologicEndocrinology::Thyroid",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 270,
+            "before_notes": 270,
+            "depth": 2,
+            "modified_notes": 2,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter5GeneralOtolaryngology",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 35,
+            "before_notes": 35,
+            "depth": 3,
+            "modified_notes": 2,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter5GeneralOtolaryngology::SalivaryGlandAnatomyandPhysiology",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 318,
+            "before_notes": 318,
+            "depth": 2,
+            "modified_notes": 6,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter6HeadandNeckCancer",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 59,
+            "before_notes": 59,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter6HeadandNeckCancer::CanceroftheNeck",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 9,
+            "before_notes": 9,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter6HeadandNeckCancer::HypopharyngealCancer",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 60,
+            "before_notes": 60,
+            "depth": 3,
+            "modified_notes": 2,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter6HeadandNeckCancer::LaryngealCancer",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 78,
+            "before_notes": 78,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter6HeadandNeckCancer::NasalandParanasalCancer",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 10,
+            "before_notes": 10,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter6HeadandNeckCancer::NasopharyngealCancerNPC",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 16,
+            "before_notes": 16,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter6HeadandNeckCancer::OtherHeadandNeckNeoplasms",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 368,
+            "before_notes": 370,
+            "depth": 2,
+            "modified_notes": 37,
+            "net_notes": -2,
+            "path": "Crabs::Pasha::Chapter7OtologyandNeurotology",
+            "removed_notes": 1
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 124,
+            "before_notes": 124,
+            "depth": 3,
+            "modified_notes": 8,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter7OtologyandNeurotology::AnatomyEmbryologyandPhysiologyofHearingandBalance",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 15,
+            "before_notes": 15,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter7OtologyandNeurotology::ApproachtoHearingLossandTinnitus",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 19,
+            "before_notes": 20,
+            "depth": 3,
+            "modified_notes": 19,
+            "net_notes": -1,
+            "path": "Crabs::Pasha::Chapter7OtologyandNeurotology::AudiologyandHearingDevices",
+            "removed_notes": 1
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 58,
+            "before_notes": 58,
+            "depth": 3,
+            "modified_notes": 2,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter7OtologyandNeurotology::InfectionsoftheEarandTemporalBone",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 67,
+            "before_notes": 67,
+            "depth": 3,
+            "modified_notes": 3,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter7OtologyandNeurotology::NoninfectiousDisordersoftheEarandTemporalBone",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 60,
+            "before_notes": 61,
+            "depth": 3,
+            "modified_notes": 4,
+            "net_notes": -1,
+            "path": "Crabs::Pasha::Chapter7OtologyandNeurotology::TheFacialNerve",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 42,
+            "before_notes": 42,
+            "depth": 3,
+            "modified_notes": 3,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter7OtologyandNeurotology::VestibularPathology",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 341,
+            "before_notes": 341,
+            "depth": 2,
+            "modified_notes": 20,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter8ReconstructiveandFacialPlasticSurgery",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 35,
+            "before_notes": 35,
+            "depth": 3,
+            "modified_notes": 3,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter8ReconstructiveandFacialPlasticSurgery::FacialReconstructionTechniques",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 10,
+            "before_notes": 10,
+            "depth": 3,
+            "modified_notes": 4,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter8ReconstructiveandFacialPlasticSurgery::ForeheadLiftandBrowLift",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 71,
+            "before_notes": 71,
+            "depth": 3,
+            "modified_notes": 4,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter8ReconstructiveandFacialPlasticSurgery::HeadandNeckReconstructiveFlaps",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 56,
+            "before_notes": 56,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter8ReconstructiveandFacialPlasticSurgery::Rhinoplasty",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 36,
+            "before_notes": 36,
+            "depth": 3,
+            "modified_notes": 10,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter8ReconstructiveandFacialPlasticSurgery::RhytidoplastyRhytidectomyFacelift",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 381,
+            "before_notes": 381,
+            "depth": 2,
+            "modified_notes": 3,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter9PediatricOtolaryngology",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 102,
+            "before_notes": 102,
+            "depth": 3,
+            "modified_notes": 3,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter9PediatricOtolaryngology::PediatricOtology",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 58,
+            "before_notes": 58,
+            "depth": 4,
+            "modified_notes": 2,
+            "net_notes": 0,
+            "path": "Crabs::Pasha::Chapter9PediatricOtolaryngology::PediatricOtology::Hearing",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 64,
+            "before_notes": 64,
+            "depth": 1,
+            "modified_notes": 7,
+            "net_notes": 0,
+            "path": "Crabs::Pimped",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 5,
+            "after_notes": 1067,
+            "before_notes": 1064,
+            "depth": 1,
+            "modified_notes": 204,
+            "net_notes": 3,
+            "path": "Crabs::Procedures",
+            "removed_notes": 1
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 3,
+            "before_notes": 3,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::BrowLift",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 4,
+            "before_notes": 5,
+            "depth": 2,
+            "modified_notes": 0,
+            "net_notes": -1,
+            "path": "Crabs::Procedures::CochlearImplant",
+            "removed_notes": 1
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 37,
+            "before_notes": 37,
+            "depth": 2,
+            "modified_notes": 7,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::Dacryocystorhinostomy",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 162,
+            "before_notes": 162,
+            "depth": 2,
+            "modified_notes": 130,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::EndoscopicSinusSurgery",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 20,
+            "before_notes": 20,
+            "depth": 3,
+            "modified_notes": 11,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::EndoscopicSinusSurgery::FrontalSinusotomy(Draf)",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 39,
+            "before_notes": 39,
+            "depth": 2,
+            "modified_notes": 15,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::Facelift",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 69,
+            "before_notes": 69,
+            "depth": 2,
+            "modified_notes": 13,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::Flaps",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 15,
+            "before_notes": 15,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::Flaps::LocalFlaps",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 13,
+            "before_notes": 13,
+            "depth": 4,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::Flaps::LocalFlaps::GilliesFanFlap",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 13,
+            "before_notes": 13,
+            "depth": 4,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::Flaps::LocalFlaps::KarapandzicFlap",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 12,
+            "before_notes": 12,
+            "depth": 3,
+            "modified_notes": 12,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::Flaps::ParamedianForeheadFlap",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 9,
+            "before_notes": 9,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::MastoidSurgery",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 43,
+            "before_notes": 43,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::MedializationLaryngoplastyArytenoidAdduction",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 58,
+            "before_notes": 58,
+            "depth": 2,
+            "modified_notes": 2,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::NeckDissection",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 9,
+            "before_notes": 9,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::NeckDissection::Central",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 19,
+            "before_notes": 19,
+            "depth": 2,
+            "modified_notes": 2,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::Parathyroidectomy",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 4,
+            "before_notes": 4,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::PosteriorNasalNeurectomy",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 7,
+            "before_notes": 7,
+            "depth": 2,
+            "modified_notes": 3,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::ReconstructionAfterSkullBaseSurgery",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 52,
+            "before_notes": 52,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::Rhinoplasty",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 18,
+            "before_notes": 18,
+            "depth": 2,
+            "modified_notes": 5,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::Septoplasty",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 12,
+            "before_notes": 12,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::SistrunkThyroglossalDuctCyst",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 5,
+            "after_notes": 22,
+            "before_notes": 17,
+            "depth": 2,
+            "modified_notes": 2,
+            "net_notes": 5,
+            "path": "Crabs::Procedures::Thyroidectomy",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 55,
+            "before_notes": 55,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::TotalMaxillectomyOrbitalExenteration",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 53,
+            "before_notes": 53,
+            "depth": 2,
+            "modified_notes": 31,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::TranscranialEndonasalApproachesAnteriorCranialBase",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 32,
+            "before_notes": 32,
+            "depth": 2,
+            "modified_notes": 23,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::TranssphenoidalApproachToPituitary",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 14,
+            "before_notes": 14,
+            "depth": 2,
+            "modified_notes": 2,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::TurbinateReduction",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 15,
+            "before_notes": 15,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Procedures::VocalFoldInjection",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 183,
+            "after_notes": 3388,
+            "before_notes": 3155,
+            "depth": 1,
+            "modified_notes": 390,
+            "net_notes": 233,
+            "path": "Crabs::Residency",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 13,
+            "after_notes": 315,
+            "before_notes": 284,
+            "depth": 2,
+            "modified_notes": 36,
+            "net_notes": 31,
+            "path": "Crabs::Residency::FacialPlastics",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 14,
+            "before_notes": 14,
+            "depth": 3,
+            "modified_notes": 6,
+            "net_notes": 0,
+            "path": "Crabs::Residency::FacialPlastics::Anatomy",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 18,
+            "before_notes": 18,
+            "depth": 3,
+            "modified_notes": 4,
+            "net_notes": 0,
+            "path": "Crabs::Residency::FacialPlastics::Facelift",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 9,
+            "before_notes": 9,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Residency::FacialPlastics::FacialAnalysis",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 35,
+            "before_notes": 35,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Residency::FacialPlastics::FacialNerveParalysis",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 7,
+            "after_notes": 49,
+            "before_notes": 27,
+            "depth": 3,
+            "modified_notes": 16,
+            "net_notes": 22,
+            "path": "Crabs::Residency::FacialPlastics::LocalFlaps",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 1,
+            "after_notes": 1,
+            "before_notes": 0,
+            "depth": 4,
+            "modified_notes": 0,
+            "net_notes": 1,
+            "path": "Crabs::Residency::FacialPlastics::LocalFlaps::Advancement",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 2,
+            "after_notes": 3,
+            "before_notes": 0,
+            "depth": 4,
+            "modified_notes": 1,
+            "net_notes": 3,
+            "path": "Crabs::Residency::FacialPlastics::LocalFlaps::Bilobe",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 12,
+            "before_notes": 0,
+            "depth": 4,
+            "modified_notes": 12,
+            "net_notes": 12,
+            "path": "Crabs::Residency::FacialPlastics::LocalFlaps::Interoplated",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 12,
+            "before_notes": 0,
+            "depth": 5,
+            "modified_notes": 12,
+            "net_notes": 12,
+            "path": "Crabs::Residency::FacialPlastics::LocalFlaps::Interoplated::ParamedianForehead",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 2,
+            "after_notes": 4,
+            "before_notes": 0,
+            "depth": 4,
+            "modified_notes": 2,
+            "net_notes": 4,
+            "path": "Crabs::Residency::FacialPlastics::LocalFlaps::Pivotal",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 1,
+            "after_notes": 3,
+            "before_notes": 0,
+            "depth": 5,
+            "modified_notes": 2,
+            "net_notes": 3,
+            "path": "Crabs::Residency::FacialPlastics::LocalFlaps::Pivotal::Rhombic",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 2,
+            "after_notes": 3,
+            "before_notes": 0,
+            "depth": 4,
+            "modified_notes": 1,
+            "net_notes": 3,
+            "path": "Crabs::Residency::FacialPlastics::LocalFlaps::Transposition",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 2,
+            "after_notes": 2,
+            "before_notes": 0,
+            "depth": 3,
+            "modified_notes": 0,
+            "net_notes": 2,
+            "path": "Crabs::Residency::FacialPlastics::LocalFlaps:Rotation:DorsalNasal",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 5,
+            "after_notes": 16,
+            "before_notes": 8,
+            "depth": 3,
+            "modified_notes": 10,
+            "net_notes": 8,
+            "path": "Crabs::Residency::FacialPlastics::MohsRepair",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 4,
+            "after_notes": 7,
+            "before_notes": 0,
+            "depth": 4,
+            "modified_notes": 3,
+            "net_notes": 7,
+            "path": "Crabs::Residency::FacialPlastics::MohsRepair::Cheek",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 1,
+            "before_notes": 0,
+            "depth": 4,
+            "modified_notes": 1,
+            "net_notes": 1,
+            "path": "Crabs::Residency::FacialPlastics::MohsRepair::Ear",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 1,
+            "after_notes": 7,
+            "before_notes": 0,
+            "depth": 4,
+            "modified_notes": 6,
+            "net_notes": 7,
+            "path": "Crabs::Residency::FacialPlastics::MohsRepair::Nose",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 36,
+            "before_notes": 36,
+            "depth": 3,
+            "modified_notes": 2,
+            "net_notes": 0,
+            "path": "Crabs::Residency::FacialPlastics::Rhinoplasty",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 2,
+            "after_notes": 77,
+            "before_notes": 71,
+            "depth": 2,
+            "modified_notes": 5,
+            "net_notes": 6,
+            "path": "Crabs::Residency::General",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 11,
+            "before_notes": 11,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Residency::General::Billing",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 2,
+            "after_notes": 6,
+            "before_notes": 0,
+            "depth": 3,
+            "modified_notes": 4,
+            "net_notes": 6,
+            "path": "Crabs::Residency::General::PROMs",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 12,
+            "after_notes": 157,
+            "before_notes": 144,
+            "depth": 2,
+            "modified_notes": 4,
+            "net_notes": 13,
+            "path": "Crabs::Residency::HN",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 2,
+            "before_notes": 2,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Residency::HN::SinonasalUndifferentiatedCarcinomaSNUC",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 7,
+            "after_notes": 7,
+            "before_notes": 2,
+            "depth": 3,
+            "modified_notes": 2,
+            "net_notes": 5,
+            "path": "Crabs::Residency::HN::ThyroidDisease",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 3,
+            "before_notes": 1,
+            "depth": 3,
+            "modified_notes": 2,
+            "net_notes": 2,
+            "path": "Crabs::Residency::HN::ThyroidDisorders",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 5,
+            "after_notes": 10,
+            "before_notes": 4,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 6,
+            "path": "Crabs::Residency::HN::Thyroidectomy",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 2,
+            "after_notes": 99,
+            "before_notes": 97,
+            "depth": 2,
+            "modified_notes": 2,
+            "net_notes": 2,
+            "path": "Crabs::Residency::Laryngology",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 7,
+            "before_notes": 7,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Residency::Laryngology::Dysphonia",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 2,
+            "after_notes": 2,
+            "before_notes": 0,
+            "depth": 3,
+            "modified_notes": 0,
+            "net_notes": 2,
+            "path": "Crabs::Residency::Laryngology::Stroboscopy",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 3,
+            "before_notes": 3,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Residency::Laryngology::VoicePhysiology",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 148,
+            "after_notes": 620,
+            "before_notes": 446,
+            "depth": 2,
+            "modified_notes": 135,
+            "net_notes": 174,
+            "path": "Crabs::Residency::Otology",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 84,
+            "after_notes": 331,
+            "before_notes": 245,
+            "depth": 3,
+            "modified_notes": 91,
+            "net_notes": 86,
+            "path": "Crabs::Residency::Otology::Anatomy",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 219,
+            "before_notes": 219,
+            "depth": 4,
+            "modified_notes": 73,
+            "net_notes": 0,
+            "path": "Crabs::Residency::Otology::Anatomy::CT",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 44,
+            "after_notes": 48,
+            "before_notes": 0,
+            "depth": 4,
+            "modified_notes": 4,
+            "net_notes": 48,
+            "path": "Crabs::Residency::Otology::Anatomy::Cochlea",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 36,
+            "after_notes": 36,
+            "before_notes": 0,
+            "depth": 4,
+            "modified_notes": 0,
+            "net_notes": 36,
+            "path": "Crabs::Residency::Otology::Anatomy::Ossicles",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 23,
+            "after_notes": 30,
+            "before_notes": 7,
+            "depth": 3,
+            "modified_notes": 3,
+            "net_notes": 23,
+            "path": "Crabs::Residency::Otology::AnatomyPhysiologyofHearing",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 6,
+            "after_notes": 19,
+            "before_notes": 11,
+            "depth": 3,
+            "modified_notes": 3,
+            "net_notes": 8,
+            "path": "Crabs::Residency::Otology::AssessmentofAudiologicFunctionHearingFunction",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 17,
+            "after_notes": 39,
+            "before_notes": 0,
+            "depth": 3,
+            "modified_notes": 22,
+            "net_notes": 39,
+            "path": "Crabs::Residency::Otology::AssistiveHearingDevicesHearingAids",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 1,
+            "before_notes": 1,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Residency::Otology::Audiometry",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 4,
+            "before_notes": 4,
+            "depth": 3,
+            "modified_notes": 3,
+            "net_notes": 0,
+            "path": "Crabs::Residency::Otology::AuditoryNeuropathySpectrumDisorderANSD",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 12,
+            "before_notes": 12,
+            "depth": 3,
+            "modified_notes": 2,
+            "net_notes": 0,
+            "path": "Crabs::Residency::Otology::CerebellopontineAngleCPATumors",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 8,
+            "after_notes": 18,
+            "before_notes": 9,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 9,
+            "path": "Crabs::Residency::Otology::Cholesteatoma",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 16,
+            "after_notes": 26,
+            "before_notes": 10,
+            "depth": 3,
+            "modified_notes": 0,
+            "net_notes": 16,
+            "path": "Crabs::Residency::Otology::CochlearImplantsCI",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 12,
+            "before_notes": 12,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Residency::Otology::EustachianTubeDysfunctionETD",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 12,
+            "before_notes": 12,
+            "depth": 3,
+            "modified_notes": 3,
+            "net_notes": 0,
+            "path": "Crabs::Residency::Otology::MalignantOtitisExterna",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 1,
+            "after_notes": 2,
+            "before_notes": 1,
+            "depth": 3,
+            "modified_notes": 0,
+            "net_notes": 1,
+            "path": "Crabs::Residency::Otology::Mastoidectomy",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 1,
+            "after_notes": 5,
+            "before_notes": 0,
+            "depth": 3,
+            "modified_notes": 4,
+            "net_notes": 5,
+            "path": "Crabs::Residency::Otology::OtitisExternaFungal",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 8,
+            "before_notes": 8,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Residency::Otology::Otosclerosis",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 1,
+            "after_notes": 10,
+            "before_notes": 9,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 1,
+            "path": "Crabs::Residency::Otology::PeripheralVestibularDisorders",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 5,
+            "after_notes": 8,
+            "before_notes": 3,
+            "depth": 3,
+            "modified_notes": 0,
+            "net_notes": 5,
+            "path": "Crabs::Residency::Otology::PulsatileTinnitus",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 1,
+            "before_notes": 1,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Residency::Otology::SingleSidedDeafness",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 6,
+            "after_notes": 7,
+            "before_notes": 1,
+            "depth": 3,
+            "modified_notes": 0,
+            "net_notes": 6,
+            "path": "Crabs::Residency::Otology::SubjectiveTinnitus",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 8,
+            "after_notes": 16,
+            "before_notes": 6,
+            "depth": 3,
+            "modified_notes": 5,
+            "net_notes": 10,
+            "path": "Crabs::Residency::Otology::SuperiorSemicircularCanalDehiscenceSSCD",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 11,
+            "before_notes": 11,
+            "depth": 3,
+            "modified_notes": 5,
+            "net_notes": 0,
+            "path": "Crabs::Residency::Otology::Tympanoplasty",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 1,
+            "after_notes": 12,
+            "before_notes": 11,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 1,
+            "path": "Crabs::Residency::Otology::VestibularTesting",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 32,
+            "before_notes": 32,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Residency::Peds",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 6,
+            "before_notes": 6,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Residency::Peds::AcuteOtitisMediaAOM",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 8,
+            "after_notes": 263,
+            "before_notes": 78,
+            "depth": 2,
+            "modified_notes": 178,
+            "net_notes": 185,
+            "path": "Crabs::Residency::Rhinology",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 185,
+            "before_notes": 8,
+            "depth": 3,
+            "modified_notes": 177,
+            "net_notes": 177,
+            "path": "Crabs::Residency::Rhinology::Anatomy",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 8,
+            "after_notes": 12,
+            "before_notes": 3,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 9,
+            "path": "Crabs::Residency::Rhinology::ChronicRhinosinusitiswithNasalPolyposisCRSwNP",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 2,
+            "before_notes": 2,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Residency::Rhinology::FrontalSinusAnatomy",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 76,
+            "before_notes": 76,
+            "depth": 2,
+            "modified_notes": 3,
+            "net_notes": 0,
+            "path": "Crabs::Residency::Trauma",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 9,
+            "before_notes": 9,
+            "depth": 3,
+            "modified_notes": 2,
+            "net_notes": 0,
+            "path": "Crabs::Residency::Trauma::FrontalSinusFracture",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 19,
+            "before_notes": 19,
+            "depth": 3,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::Residency::Trauma::MandibleFracture",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 3506,
+            "before_notes": 3507,
+            "depth": 1,
+            "modified_notes": 297,
+            "net_notes": -1,
+            "path": "Crabs::Specialty",
+            "removed_notes": 1
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 635,
+            "before_notes": 635,
+            "depth": 2,
+            "modified_notes": 33,
+            "net_notes": 0,
+            "path": "Crabs::Specialty::FacialPlastics",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 2294,
+            "before_notes": 2296,
+            "depth": 2,
+            "modified_notes": 254,
+            "net_notes": -2,
+            "path": "Crabs::Specialty::General",
+            "removed_notes": 1
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 706,
+            "before_notes": 706,
+            "depth": 2,
+            "modified_notes": 13,
+            "net_notes": 0,
+            "path": "Crabs::Specialty::HN",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 309,
+            "before_notes": 309,
+            "depth": 2,
+            "modified_notes": 5,
+            "net_notes": 0,
+            "path": "Crabs::Specialty::Laryngology",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 38,
+            "before_notes": 38,
+            "depth": 2,
+            "modified_notes": 6,
+            "net_notes": 0,
+            "path": "Crabs::Specialty::Otology",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 414,
+            "before_notes": 415,
+            "depth": 2,
+            "modified_notes": 37,
+            "net_notes": -1,
+            "path": "Crabs::Specialty::OtologyNeurotology",
+            "removed_notes": 1
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 512,
+            "before_notes": 512,
+            "depth": 2,
+            "modified_notes": 16,
+            "net_notes": 0,
+            "path": "Crabs::Specialty::Peds",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 449,
+            "before_notes": 449,
+            "depth": 2,
+            "modified_notes": 181,
+            "net_notes": 0,
+            "path": "Crabs::Specialty::Rhinology",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 510,
+            "before_notes": 510,
+            "depth": 1,
+            "modified_notes": 69,
+            "net_notes": 0,
+            "path": "Crabs::Sub-I",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 60,
+            "before_notes": 60,
+            "depth": 1,
+            "modified_notes": 6,
+            "net_notes": 0,
+            "path": "Crabs::duplicates_didnt_study",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 865,
+            "before_notes": 865,
+            "depth": 1,
+            "modified_notes": 153,
+            "net_notes": 0,
+            "path": "Crabs::elective",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 500,
+            "before_notes": 500,
+            "depth": 1,
+            "modified_notes": 171,
+            "net_notes": 0,
+            "path": "Crabs::extra_anatomy",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 1072,
+            "before_notes": 1073,
+            "depth": 1,
+            "modified_notes": 51,
+            "net_notes": -1,
+            "path": "Crabs::secrets_ent",
+            "removed_notes": 1
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 8,
+            "before_notes": 8,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::secrets_ent::Cholesteatoma",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 27,
+            "before_notes": 27,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::secrets_ent::Diseases_Of_The_Salivary_Glands",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 24,
+            "before_notes": 24,
+            "depth": 2,
+            "modified_notes": 12,
+            "net_notes": 0,
+            "path": "Crabs::secrets_ent::Evaluation_Of_Hearing",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 20,
+            "before_notes": 20,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::secrets_ent::Evaluation_Of_The_Vestibular_System_And_Vestibular_Disorders",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 39,
+            "before_notes": 39,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::secrets_ent::Facial_Nerve",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 4,
+            "before_notes": 5,
+            "depth": 2,
+            "modified_notes": 4,
+            "net_notes": -1,
+            "path": "Crabs::secrets_ent::HearingAidsImplantableDevices",
+            "removed_notes": 1
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 15,
+            "before_notes": 15,
+            "depth": 2,
+            "modified_notes": 3,
+            "net_notes": 0,
+            "path": "Crabs::secrets_ent::Hearing_Loss_And_Ototoxicity",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 27,
+            "before_notes": 27,
+            "depth": 2,
+            "modified_notes": 2,
+            "net_notes": 0,
+            "path": "Crabs::secrets_ent::Infections_Of_The_Ear",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 33,
+            "before_notes": 33,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::secrets_ent::Neck_Dissection",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 8,
+            "before_notes": 8,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::secrets_ent::Orbital_Surgery",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 33,
+            "before_notes": 33,
+            "depth": 2,
+            "modified_notes": 4,
+            "net_notes": 0,
+            "path": "Crabs::secrets_ent::Otology_Anatomy_And_Embryology_With_Radiology_Correlates",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 68,
+            "before_notes": 68,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::secrets_ent::Plastic_Surgery",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 14,
+            "before_notes": 14,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::secrets_ent::Rhinoplasty_And_Nasal_Reconstruction",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 11,
+            "before_notes": 11,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::secrets_ent::Septoplasty_And_Turbinate_Surgery",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 16,
+            "before_notes": 16,
+            "depth": 2,
+            "modified_notes": 16,
+            "net_notes": 0,
+            "path": "Crabs::secrets_ent::Sinonasal_Anatomy_And_Embryology_With_Radiology_Correlates",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 2,
+            "before_notes": 2,
+            "depth": 2,
+            "modified_notes": 1,
+            "net_notes": 0,
+            "path": "Crabs::secrets_ent::Surgery_For_Vertigo",
+            "removed_notes": 0
+          },
+          {
+            "added_notes": 0,
+            "after_notes": 0,
+            "before_notes": 1,
+            "depth": 0,
+            "modified_notes": 0,
+            "net_notes": -1,
+            "path": "Tags",
+            "removed_notes": 1
+          }
+        ],
+        "count_unit": "notes",
+        "schema": 1,
+        "tags_added": [
+          "Anatomy",
+          "Crabs::Residency::FacialPlastics::LocalFlaps::Advancement",
+          "Crabs::Residency::FacialPlastics::LocalFlaps::Bilobe",
+          "Crabs::Residency::FacialPlastics::LocalFlaps::Interoplated::ParamedianForehead",
+          "Crabs::Residency::FacialPlastics::LocalFlaps::Pivotal",
+          "Crabs::Residency::FacialPlastics::LocalFlaps::Pivotal::Rhombic",
+          "Crabs::Residency::FacialPlastics::LocalFlaps::Transposition",
+          "Crabs::Residency::FacialPlastics::LocalFlaps:Rotation:DorsalNasal",
+          "Crabs::Residency::FacialPlastics::MohsRepair::Cheek",
+          "Crabs::Residency::FacialPlastics::MohsRepair::Ear",
+          "Crabs::Residency::FacialPlastics::MohsRepair::Nose",
+          "Crabs::Residency::General::PROMs",
+          "Crabs::Residency::Laryngology::Stroboscopy",
+          "Crabs::Residency::Otology::Anatomy::Cochlea",
+          "Crabs::Residency::Otology::Anatomy::Ossicles",
+          "Crabs::Residency::Otology::AssistiveHearingDevicesHearingAids",
+          "Crabs::Residency::Otology::OtitisExternaFungal"
+        ],
+        "tags_removed": [
+          "Tags"
+        ]
+      },
       "total_cards": 5653,
       "total_media": 3063,
       "total_notes": 4275,
@@ -30,7 +3804,11 @@
       "whats_new": [
         "291 cards added; 473 existing cards updated; 2 cards removed from the package.",
         "183 notes added; 399 notes updated (249 with field edits, 150 tags only); 2 notes removed from the package.",
-        "193 media files added; 1 removed; 0 existing media files changed."
+        "193 media files added; 1 removed; 0 existing media files changed.",
+        "17 exact tags added; 1 exact tag removed.",
+        "Crabs::Residency: +233 associated notes net (183 newly added; 0 removed; 390 modified retained notes associated before or after).",
+        "Crabs::Procedures: +3 associated notes net (5 newly added; 1 removed; 204 modified retained notes associated before or after).",
+        "Branch counts include descendants and overlap across branches; changes can reflect retagging as well as new content."
       ]
     },
     {

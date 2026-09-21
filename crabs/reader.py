@@ -14,6 +14,7 @@ import zipfile
 from pathlib import Path
 from urllib.parse import unquote
 from .protobuf import FormatError, message, one, config, varint
+from .tags import parse_tags
 
 MAX_DB = 1024 ** 3
 MAX_META = 64 * 1024 ** 2
@@ -213,7 +214,7 @@ def read_package(path):
                     if not guid:raise FormatError('Note has empty GUID')
                     notes[str(nid)]={'id':nid,'guid':guid,'model_id':mid,
                         'fields':[{'name':f['name'],'value':v} for f,v in zip(models[str(mid)]['flds'],values)],
-                        'tags':sorted(set(tags.split())-{'marked','leech'}),
+                        'tags':parse_tags(tags),
                         'media':media_refs(fields)}
                     if data:notes[str(nid)]['extra_data']=data
                     note_times[str(nid)]=mod

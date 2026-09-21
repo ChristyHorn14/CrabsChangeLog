@@ -11,6 +11,7 @@ from crabs.reader import read_package
 from crabs.compare import compare
 from crabs.output import planned_outputs
 from crabs.protobuf import FormatError
+from crabs.tags import deck_stats, summary_lines as tag_summary
 
 ROOT=Path(__file__).resolve().parent
 
@@ -76,6 +77,9 @@ def run(argv=None):
         delta=compare(old,new,oa,na)
         for check in delta['checks']:print(f"{check['status']}: {check['name']} — {check['detail']}")
         print(json.dumps(delta['summary'],indent=2))
+        stats=deck_stats(new,args.release_date)
+        print(f"Tags: {stats['total_tags']:,} exact content tags; {stats['total_tag_nodes']:,} hierarchy nodes; {stats['untagged_notes']:,} untagged notes")
+        for line in tag_summary(delta['tag_changes']):print(line)
         if delta['status']=='FAIL' or (args.strict and delta['status']=='WARNING'):
             print('STOP: release outputs were not written.',file=sys.stderr);return 2
         if args.check_only:return 0

@@ -1,6 +1,6 @@
 {
   "baseline": "2026-06-20",
-  "candidate": "2026-09-20",
+  "candidate": "2026-09-21",
   "checks": [
     {
       "detail": "Read and integrity-checked; collection.anki21, metadata v2, SQLite schema 11; {'notes': 4094, 'cards': 5364, 'media': 2871}",
@@ -13,7 +13,7 @@
       "status": "PASS"
     },
     {
-      "detail": "Read and integrity-checked; collection.anki21b, metadata v3, SQLite schema 18; {'notes': 4275, 'cards': 5653, 'media': 3063}",
+      "detail": "Read and integrity-checked; collection.anki21b, metadata v3, SQLite schema 18; {'notes': 4224, 'cards': 5586, 'media': 3016}",
       "name": "Candidate package",
       "status": "PASS"
     },
@@ -23,7 +23,7 @@
       "status": "PASS"
     },
     {
-      "detail": "4092 notes match by GUID; 4092 also preserve numeric note ID",
+      "detail": "4041 notes match by GUID; 4041 also preserve numeric note ID",
       "name": "Shared note GUIDs",
       "status": "PASS"
     },
@@ -48,7 +48,7 @@
       "status": "WARNING"
     },
     {
-      "detail": "2 notes and 2 cards absent in candidate. Importing an update does not reliably delete existing user content; review separately",
+      "detail": "53 notes and 69 cards absent in candidate. Importing an update does not reliably delete existing user content; review separately",
       "name": "Removed content",
       "status": "WARNING"
     },
@@ -72,21 +72,21 @@
   "status": "WARNING",
   "summary": {
     "cards_added": 291,
-    "cards_removed": 2,
-    "cards_updated": 473,
+    "cards_removed": 69,
+    "cards_updated": 526,
     "media_added": 193,
-    "media_removed": 1,
+    "media_removed": 48,
     "media_updated": 0,
     "new": {
-      "cards": 5653,
-      "media": 3063,
-      "notes": 4275
+      "cards": 5586,
+      "media": 3016,
+      "notes": 4224
     },
     "notes_added": 183,
-    "notes_fields_updated": 249,
-    "notes_removed": 2,
-    "notes_tags_only": 150,
-    "notes_updated": 399,
+    "notes_fields_updated": 255,
+    "notes_removed": 53,
+    "notes_tags_only": 196,
+    "notes_updated": 451,
     "old": {
       "cards": 5364,
       "media": 2871,
@@ -95,7 +95,6 @@
   },
   "tag_changes": {
     "branches_added": [
-      "Anatomy",
       "Crabs::Residency::FacialPlastics::LocalFlaps::Advancement",
       "Crabs::Residency::FacialPlastics::LocalFlaps::Bilobe",
       "Crabs::Residency::FacialPlastics::LocalFlaps::Interoplated",
@@ -106,6 +105,7 @@
       "Crabs::Residency::FacialPlastics::MohsRepair::Ear",
       "Crabs::Residency::FacialPlastics::MohsRepair::Nose",
       "Crabs::Residency::General::PROMs",
+      "Crabs::Residency::Laryngology::Anatomy",
       "Crabs::Residency::Laryngology::Stroboscopy",
       "Crabs::Residency::Otology::Anatomy::Cochlea",
       "Crabs::Residency::Otology::Anatomy::Ossicles",
@@ -113,25 +113,22 @@
       "Crabs::Residency::Otology::OtitisExternaFungal"
     ],
     "branches_removed": [
-      "Tags"
+      "Severe",
+      "Tags",
+      "anat",
+      "appearance",
+      "include",
+      "symptoms",
+      "toxic",
+      "…"
     ],
     "by_branch": [
-      {
-        "added_notes": 0,
-        "after_notes": 1,
-        "before_notes": 0,
-        "depth": 0,
-        "modified_notes": 1,
-        "net_notes": 1,
-        "path": "Anatomy",
-        "removed_notes": 0
-      },
       {
         "added_notes": 183,
         "after_notes": 4224,
         "before_notes": 4042,
         "depth": 0,
-        "modified_notes": 399,
+        "modified_notes": 451,
         "net_notes": 182,
         "path": "Crabs",
         "removed_notes": 1
@@ -191,7 +188,7 @@
         "after_notes": 2309,
         "before_notes": 2310,
         "depth": 1,
-        "modified_notes": 246,
+        "modified_notes": 297,
         "net_notes": -1,
         "path": "Crabs::Pasha",
         "removed_notes": 1
@@ -321,7 +318,7 @@
         "after_notes": 318,
         "before_notes": 318,
         "depth": 2,
-        "modified_notes": 6,
+        "modified_notes": 10,
         "net_notes": 0,
         "path": "Crabs::Pasha::Chapter6HeadandNeckCancer",
         "removed_notes": 0
@@ -351,7 +348,7 @@
         "after_notes": 60,
         "before_notes": 60,
         "depth": 3,
-        "modified_notes": 2,
+        "modified_notes": 6,
         "net_notes": 0,
         "path": "Crabs::Pasha::Chapter6HeadandNeckCancer::LaryngealCancer",
         "removed_notes": 0
@@ -391,7 +388,7 @@
         "after_notes": 368,
         "before_notes": 370,
         "depth": 2,
-        "modified_notes": 37,
+        "modified_notes": 84,
         "net_notes": -2,
         "path": "Crabs::Pasha::Chapter7OtologyandNeurotology",
         "removed_notes": 1
@@ -401,7 +398,7 @@
         "after_notes": 124,
         "before_notes": 124,
         "depth": 3,
-        "modified_notes": 8,
+        "modified_notes": 55,
         "net_notes": 0,
         "path": "Crabs::Pasha::Chapter7OtologyandNeurotology::AnatomyEmbryologyandPhysiologyofHearingandBalance",
         "removed_notes": 0
@@ -571,7 +568,7 @@
         "after_notes": 1067,
         "before_notes": 1064,
         "depth": 1,
-        "modified_notes": 204,
+        "modified_notes": 243,
         "net_notes": 3,
         "path": "Crabs::Procedures",
         "removed_notes": 1
@@ -708,6 +705,16 @@
       },
       {
         "added_notes": 0,
+        "after_notes": 28,
+        "before_notes": 28,
+        "depth": 2,
+        "modified_notes": 25,
+        "net_notes": 0,
+        "path": "Crabs::Procedures::MyringoplastyTympanoplasty",
+        "removed_notes": 0
+      },
+      {
+        "added_notes": 0,
         "after_notes": 58,
         "before_notes": 58,
         "depth": 2,
@@ -724,6 +731,16 @@
         "modified_notes": 1,
         "net_notes": 0,
         "path": "Crabs::Procedures::NeckDissection::Central",
+        "removed_notes": 0
+      },
+      {
+        "added_notes": 0,
+        "after_notes": 31,
+        "before_notes": 31,
+        "depth": 2,
+        "modified_notes": 10,
+        "net_notes": 0,
+        "path": "Crabs::Procedures::PETubePlacement",
         "removed_notes": 0
       },
       {
@@ -818,6 +835,16 @@
       },
       {
         "added_notes": 0,
+        "after_notes": 42,
+        "before_notes": 42,
+        "depth": 2,
+        "modified_notes": 4,
+        "net_notes": 0,
+        "path": "Crabs::Procedures::TransoralLaserMicrosurgeryLaryngealCancer",
+        "removed_notes": 0
+      },
+      {
+        "added_notes": 0,
         "after_notes": 32,
         "before_notes": 32,
         "depth": 2,
@@ -848,31 +875,31 @@
       },
       {
         "added_notes": 183,
-        "after_notes": 3388,
+        "after_notes": 3440,
         "before_notes": 3155,
         "depth": 1,
-        "modified_notes": 390,
-        "net_notes": 233,
+        "modified_notes": 442,
+        "net_notes": 285,
         "path": "Crabs::Residency",
         "removed_notes": 0
       },
       {
         "added_notes": 13,
-        "after_notes": 315,
+        "after_notes": 328,
         "before_notes": 284,
         "depth": 2,
-        "modified_notes": 36,
-        "net_notes": 31,
+        "modified_notes": 49,
+        "net_notes": 44,
         "path": "Crabs::Residency::FacialPlastics",
         "removed_notes": 0
       },
       {
         "added_notes": 0,
-        "after_notes": 14,
+        "after_notes": 26,
         "before_notes": 14,
         "depth": 3,
-        "modified_notes": 6,
-        "net_notes": 0,
+        "modified_notes": 18,
+        "net_notes": 12,
         "path": "Crabs::Residency::FacialPlastics::Anatomy",
         "removed_notes": 0
       },
@@ -1038,11 +1065,11 @@
       },
       {
         "added_notes": 0,
-        "after_notes": 36,
+        "after_notes": 37,
         "before_notes": 36,
         "depth": 3,
-        "modified_notes": 2,
-        "net_notes": 0,
+        "modified_notes": 3,
+        "net_notes": 1,
         "path": "Crabs::Residency::FacialPlastics::Rhinoplasty",
         "removed_notes": 0
       },
@@ -1128,12 +1155,22 @@
       },
       {
         "added_notes": 2,
-        "after_notes": 99,
+        "after_notes": 103,
         "before_notes": 97,
         "depth": 2,
-        "modified_notes": 2,
-        "net_notes": 2,
+        "modified_notes": 6,
+        "net_notes": 6,
         "path": "Crabs::Residency::Laryngology",
+        "removed_notes": 0
+      },
+      {
+        "added_notes": 0,
+        "after_notes": 4,
+        "before_notes": 0,
+        "depth": 3,
+        "modified_notes": 4,
+        "net_notes": 4,
+        "path": "Crabs::Residency::Laryngology::Anatomy",
         "removed_notes": 0
       },
       {
@@ -1168,21 +1205,21 @@
       },
       {
         "added_notes": 148,
-        "after_notes": 620,
+        "after_notes": 667,
         "before_notes": 446,
         "depth": 2,
-        "modified_notes": 135,
-        "net_notes": 174,
+        "modified_notes": 182,
+        "net_notes": 221,
         "path": "Crabs::Residency::Otology",
         "removed_notes": 0
       },
       {
         "added_notes": 84,
-        "after_notes": 331,
+        "after_notes": 378,
         "before_notes": 245,
         "depth": 3,
-        "modified_notes": 91,
-        "net_notes": 86,
+        "modified_notes": 138,
+        "net_notes": 133,
         "path": "Crabs::Residency::Otology::Anatomy",
         "removed_notes": 0
       },
@@ -1511,7 +1548,7 @@
         "after_notes": 3506,
         "before_notes": 3507,
         "depth": 1,
-        "modified_notes": 297,
+        "modified_notes": 349,
         "net_notes": -1,
         "path": "Crabs::Specialty",
         "removed_notes": 1
@@ -1521,7 +1558,7 @@
         "after_notes": 635,
         "before_notes": 635,
         "depth": 2,
-        "modified_notes": 33,
+        "modified_notes": 45,
         "net_notes": 0,
         "path": "Crabs::Specialty::FacialPlastics",
         "removed_notes": 0
@@ -1551,7 +1588,7 @@
         "after_notes": 309,
         "before_notes": 309,
         "depth": 2,
-        "modified_notes": 5,
+        "modified_notes": 9,
         "net_notes": 0,
         "path": "Crabs::Specialty::Laryngology",
         "removed_notes": 0
@@ -1571,7 +1608,7 @@
         "after_notes": 414,
         "before_notes": 415,
         "depth": 2,
-        "modified_notes": 37,
+        "modified_notes": 84,
         "net_notes": -1,
         "path": "Crabs::Specialty::OtologyNeurotology",
         "removed_notes": 1
@@ -1581,7 +1618,7 @@
         "after_notes": 512,
         "before_notes": 512,
         "depth": 2,
-        "modified_notes": 16,
+        "modified_notes": 51,
         "net_notes": 0,
         "path": "Crabs::Specialty::Peds",
         "removed_notes": 0
@@ -1594,6 +1631,16 @@
         "modified_notes": 181,
         "net_notes": 0,
         "path": "Crabs::Specialty::Rhinology",
+        "removed_notes": 0
+      },
+      {
+        "added_notes": 0,
+        "after_notes": 125,
+        "before_notes": 125,
+        "depth": 2,
+        "modified_notes": 1,
+        "net_notes": 0,
+        "path": "Crabs::Specialty::Trauma",
         "removed_notes": 0
       },
       {
@@ -1621,7 +1668,7 @@
         "after_notes": 865,
         "before_notes": 865,
         "depth": 1,
-        "modified_notes": 153,
+        "modified_notes": 167,
         "net_notes": 0,
         "path": "Crabs::elective",
         "removed_notes": 0
@@ -1631,7 +1678,7 @@
         "after_notes": 500,
         "before_notes": 500,
         "depth": 1,
-        "modified_notes": 171,
+        "modified_notes": 218,
         "net_notes": 0,
         "path": "Crabs::extra_anatomy",
         "removed_notes": 0
@@ -1641,10 +1688,20 @@
         "after_notes": 1072,
         "before_notes": 1073,
         "depth": 1,
-        "modified_notes": 51,
+        "modified_notes": 55,
         "net_notes": -1,
         "path": "Crabs::secrets_ent",
         "removed_notes": 1
+      },
+      {
+        "added_notes": 0,
+        "after_notes": 14,
+        "before_notes": 14,
+        "depth": 2,
+        "modified_notes": 4,
+        "net_notes": 0,
+        "path": "Crabs::secrets_ent::Benign_Vocal_Fold_Lesions_And_Microsurgery",
+        "removed_notes": 0
       },
       {
         "added_notes": 0,
@@ -1813,14 +1870,183 @@
         "depth": 0,
         "modified_notes": 0,
         "net_notes": -1,
+        "path": "Severe",
+        "removed_notes": 1
+      },
+      {
+        "added_notes": 0,
+        "after_notes": 0,
+        "before_notes": 1,
+        "depth": 0,
+        "modified_notes": 0,
+        "net_notes": -1,
         "path": "Tags",
         "removed_notes": 1
+      },
+      {
+        "added_notes": 0,
+        "after_notes": 0,
+        "before_notes": 51,
+        "depth": 0,
+        "modified_notes": 51,
+        "net_notes": -51,
+        "path": "anat",
+        "removed_notes": 0
+      },
+      {
+        "added_notes": 0,
+        "after_notes": 0,
+        "before_notes": 1,
+        "depth": 0,
+        "modified_notes": 0,
+        "net_notes": -1,
+        "path": "appearance",
+        "removed_notes": 1
+      },
+      {
+        "added_notes": 0,
+        "after_notes": 0,
+        "before_notes": 1,
+        "depth": 0,
+        "modified_notes": 0,
+        "net_notes": -1,
+        "path": "include",
+        "removed_notes": 1
+      },
+      {
+        "added_notes": 0,
+        "after_notes": 0,
+        "before_notes": 1,
+        "depth": 0,
+        "modified_notes": 0,
+        "net_notes": -1,
+        "path": "symptoms",
+        "removed_notes": 1
+      },
+      {
+        "added_notes": 0,
+        "after_notes": 0,
+        "before_notes": 1,
+        "depth": 0,
+        "modified_notes": 0,
+        "net_notes": -1,
+        "path": "toxic",
+        "removed_notes": 1
+      },
+      {
+        "added_notes": 0,
+        "after_notes": 0,
+        "before_notes": 23,
+        "depth": 0,
+        "modified_notes": 1,
+        "net_notes": -23,
+        "path": "…",
+        "removed_notes": 22
+      },
+      {
+        "added_notes": 0,
+        "after_notes": 0,
+        "before_notes": 1,
+        "depth": 1,
+        "modified_notes": 1,
+        "net_notes": -1,
+        "path": "…::CranioOrbitalFractures",
+        "removed_notes": 0
+      },
+      {
+        "added_notes": 0,
+        "after_notes": 0,
+        "before_notes": 22,
+        "depth": 1,
+        "modified_notes": 0,
+        "net_notes": -22,
+        "path": "…::Plastics",
+        "removed_notes": 22
+      },
+      {
+        "added_notes": 0,
+        "after_notes": 0,
+        "before_notes": 22,
+        "depth": 1,
+        "modified_notes": 0,
+        "net_notes": -22,
+        "path": "…::PlasticsTrauma",
+        "removed_notes": 22
+      },
+      {
+        "added_notes": 0,
+        "after_notes": 0,
+        "before_notes": 22,
+        "depth": 1,
+        "modified_notes": 0,
+        "net_notes": -22,
+        "path": "…::Residency",
+        "removed_notes": 22
+      },
+      {
+        "added_notes": 0,
+        "after_notes": 0,
+        "before_notes": 22,
+        "depth": 1,
+        "modified_notes": 0,
+        "net_notes": -22,
+        "path": "…::Rhinoplasty",
+        "removed_notes": 22
+      },
+      {
+        "added_notes": 0,
+        "after_notes": 0,
+        "before_notes": 22,
+        "depth": 1,
+        "modified_notes": 0,
+        "net_notes": -22,
+        "path": "…::Rhinoplasty_And_Nasal_Reconstruction",
+        "removed_notes": 22
+      },
+      {
+        "added_notes": 0,
+        "after_notes": 0,
+        "before_notes": 1,
+        "depth": 1,
+        "modified_notes": 1,
+        "net_notes": -1,
+        "path": "…::Trauma",
+        "removed_notes": 0
+      },
+      {
+        "added_notes": 0,
+        "after_notes": 0,
+        "before_notes": 1,
+        "depth": 1,
+        "modified_notes": 1,
+        "net_notes": -1,
+        "path": "…::ZygomaticomaxillaryandOrbitalFractures",
+        "removed_notes": 0
+      },
+      {
+        "added_notes": 0,
+        "after_notes": 0,
+        "before_notes": 23,
+        "depth": 1,
+        "modified_notes": 1,
+        "net_notes": -23,
+        "path": "…::elective",
+        "removed_notes": 22
+      },
+      {
+        "added_notes": 0,
+        "after_notes": 0,
+        "before_notes": 1,
+        "depth": 1,
+        "modified_notes": 1,
+        "net_notes": -1,
+        "path": "…::facial_trauma",
+        "removed_notes": 0
       }
     ],
     "count_unit": "notes",
     "schema": 1,
     "tags_added": [
-      "Anatomy",
       "Crabs::Residency::FacialPlastics::LocalFlaps::Advancement",
       "Crabs::Residency::FacialPlastics::LocalFlaps::Bilobe",
       "Crabs::Residency::FacialPlastics::LocalFlaps::Interoplated::ParamedianForehead",
@@ -1832,6 +2058,7 @@
       "Crabs::Residency::FacialPlastics::MohsRepair::Ear",
       "Crabs::Residency::FacialPlastics::MohsRepair::Nose",
       "Crabs::Residency::General::PROMs",
+      "Crabs::Residency::Laryngology::Anatomy",
       "Crabs::Residency::Laryngology::Stroboscopy",
       "Crabs::Residency::Otology::Anatomy::Cochlea",
       "Crabs::Residency::Otology::Anatomy::Ossicles",
@@ -1839,7 +2066,23 @@
       "Crabs::Residency::Otology::OtitisExternaFungal"
     ],
     "tags_removed": [
-      "Tags"
+      "Severe",
+      "Tags",
+      "anat",
+      "appearance",
+      "include",
+      "symptoms",
+      "toxic",
+      "…::CranioOrbitalFractures",
+      "…::Plastics",
+      "…::PlasticsTrauma",
+      "…::Residency",
+      "…::Rhinoplasty",
+      "…::Rhinoplasty_And_Nasal_Reconstruction",
+      "…::Trauma",
+      "…::ZygomaticomaxillaryandOrbitalFractures",
+      "…::elective",
+      "…::facial_trauma"
     ]
   }
 }

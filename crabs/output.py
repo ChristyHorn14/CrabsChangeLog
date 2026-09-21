@@ -4,6 +4,7 @@ import re
 from datetime import date
 from pathlib import Path
 from .protobuf import FormatError
+from .tags import deck_stats, hierarchy, summary_lines as tag_summary
 
 
 def json_text(value):
@@ -57,7 +58,7 @@ def report(old,new,oa,na,d,baseline,release):
               '### Card identifier changes',fenced(d['card_identity_changes']),
               '### Changed notes not newer than baseline',fenced(d['stale_modified_notes']),
               '### Changed models not newer than baseline',fenced(d['stale_models'])]
-    for title,key in [('Deck structure','decks'),('Note types and templates','models'),('Deck moves','deck_moves'),('Media additions, removals and replacements','media')]:
+    for title,key in [('Tag changes','tag_changes'),('Deck structure','decks'),('Note types and templates','models'),('Deck moves','deck_moves'),('Media additions, removals and replacements','media')]:
         lines += ['',f'## {title}','',fenced(d[key])]
     lines += ['', '## Media references','',
               'Literal HTML src/data/poster, CSS url(), and [sound:] references are collected from note fields, templates and CSS. Dynamic JavaScript/template-generated references and implicit LaTeX-generated names cannot be exhaustively resolved. All packaged media bytes are hashed, including unreferenced files.','',
@@ -103,8 +104,8 @@ def history(root,old,new,oa,na,d,baseline,release,project,notes=None,publication
     records[baseline]['publication_status']='published'
     existing=records[release]
     if existing['previous_release'] not in (None,baseline):raise FormatError('Release already compared with a different baseline')
-    existing.update(previous_release=baseline,changes={k:v for k,v in d['summary'].items() if k not in ('old','new')},
-        audit_status=d['status'],compatibility='review_required',whats_new=summary_lines(d))
+    existing.update(tag_changes=d['tag_changes'], previous_release=baseline,changes={k:v for k,v in d['summary'].items() if k not in ('old','new')},
+        audit_status=d['status'],compatibility='review_required',whats_new=summary_lines(d)+tag_summary(d['tag_changes']))
     if notes is not None:existing['editorial_notes']=notes
     if publication_status is not None:existing['publication_status']=publication_status
     data['releases']=sorted(records.values(),key=lambda r:r['date'],reverse=True)
@@ -159,9 +160,17 @@ def planned_outputs(root,old,new,oa,na,d,baseline,release,project,notes=None,pub
     outputs={root/'snapshots'/f'{baseline}.json':json_text(old),root/'snapshots'/f'{release}.json':json_text(new),
         root/'reports'/f'{baseline}_to_{release}.md':report(old,new,oa,na,d,baseline,release),
         root/'reports'/f'{baseline}_to_{release}.checks.json':json_text({'schema':1,'baseline':baseline,'candidate':release,
-            'status':d['status'],'summary':d['summary'],'checks':d['checks']}),
+            'status':d['status'],'summary':d['summary'],'checks':d['checks'],'tag_changes':d['tag_changes']}),
         root/'releases.json':json_text(data),root/'website'/'releases.json':json_text(public),
         root/'website'/'whats-new.md':latest_markdown(public),root/'CHANGELOG.md':changelog(root,public)}
+    # Rerunning an older comparison must not regress the latest deck artifacts.
+    latest=public['latest_release_date']
+    current=new if latest==release else json.loads((root/'snapshots'/f'{latest}.json').read_text())
+    outputs[root/'website'/'deck-stats.json']=json_text(deck_stats(current,latest))
+    outputs[root/'website'/'tags.json']=json_text(hierarchy(current,latest))
+    for filename in ('how-to-use.md','updating.md'):
+        source=root/'docs'/filename
+        if source.exists():outputs[root/'website'/filename]=source.read_text(encoding='utf-8')
     for path,content in outputs.items():
         if path.parent.name=='snapshots' and path.exists() and path.read_text()!=content:
             raise FormatError(f'Snapshot {path.name} already contains different normalized content; history is immutable')

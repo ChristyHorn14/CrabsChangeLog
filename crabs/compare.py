@@ -1,6 +1,7 @@
 """Deterministic content matching, structural diff, and conservative release checks."""
 from collections import Counter, defaultdict
 from .reader import media_refs
+from .tags import tag_changes
 
 
 def index(notes, key):
@@ -108,6 +109,21 @@ def compare(old,new,old_audit,new_audit):
     check('WARNING' if any(decks.values()) else 'PASS','Deck identity/structure',
           f"{len(decks['added'])} added, {len(decks['removed'])} removed, {len(decks['modified'])} changed deck definitions; compare names and IDs below")
     old_used={str(c['deck_id']) for c in old['cards'].values()};new_used={str(c['deck_id']) for c in new['cards'].values()}
+    # Anchor the dominant baseline deck; additional/deleted ancillary decks still warn.
+    deck_counts=Counter(str(c['deck_id']) for c in old['cards'].values())
+    if deck_counts:
+        anchor=min(deck_counts, key=lambda key: (-deck_counts[key], key))
+        preserved=(anchor in new_used and anchor in new['decks'] and
+                   old['decks'][anchor]['name']==new['decks'][anchor]['name'])
+        check('PASS' if preserved else 'FAIL','Primary deck identity',
+              'Dominant baseline deck must retain its exact name, ID, and active cards')
+    renamed=[key for key in old['decks'].keys() & new['decks'].keys()
+             if old['decks'][key]['name']!=new['decks'][key]['name']]
+    if renamed:check('FAIL','Deck renamed','Retained deck IDs have changed names; restore the original names')
+    unsafe=[m for m in identity if m['before']['guid']!=m['after']['guid'] or m['before']['model_id']!=m['after']['model_id']]
+    if unsafe or collisions or ambiguous:
+        check('FAIL','Unsafe note correspondence','Changed GUID/model identity, reused note IDs, or unresolved ambiguous matches require correction before release')
+
     if old_used and not old_used & new_used:check('WARNING','Active deck IDs','No shared IDs among decks containing cards')
     check('WARNING' if any(models.values()) else 'PASS','Note types/templates',
           f"{len(models['added'])} added, {len(models['removed'])} removed, {len(models['modified'])} modified note types")
@@ -127,9 +143,12 @@ def compare(old,new,old_audit,new_audit):
         'notes_tags_only':sum(not m['fields'] and m['before']['model_id']==m['after']['model_id'] and m['before'].get('extra_data')==m['after'].get('extra_data') for m in modified),'cards_added':len(card_added),'cards_removed':len(card_removed),
         'cards_updated':len(card_updated),'media_added':len(media['added']),'media_removed':len(media['removed']),
         'media_updated':len(media['modified'])}
-    return {'summary':summary,'status':'FAIL' if any(c['status']=='FAIL' for c in checks) else 'WARNING' if any(c['status']=='WARNING' for c in checks) else 'PASS',
+    result = {'summary':summary,'status':'FAIL' if any(c['status']=='FAIL' for c in checks) else 'WARNING' if any(c['status']=='WARNING' for c in checks) else 'PASS',
         'checks':checks,'matching':dict(methods),'ambiguities':ambiguous,'matches':matches,'identity_changes':identity,
         'reused_note_ids':sorted(collisions),'stale_modified_notes':stale,'stale_models':stale_models,
         'notes_added':[new['notes'][i] for i in added],'notes_removed':[old['notes'][i] for i in removed],
         'notes_modified':modified,'cards_added':card_added,'cards_removed':card_removed,'cards_updated':card_updated,
         'card_identity_changes':card_identity,'deck_moves':moves,'decks':decks,'models':models,'media':media}
+
+    result['tag_changes'] = tag_changes(old, new, result)
+    return result
