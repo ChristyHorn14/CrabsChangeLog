@@ -36,3 +36,6 @@ __pycache__/
 *.woff*
 *.mov
 *.m4a
+
+# Private maintainer history, proposals, previews and output artifacts
+/private-audit/

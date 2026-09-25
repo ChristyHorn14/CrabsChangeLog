@@ -1,6 +1,6 @@
 # Crabs Anki release workflow
 
-Compare a previously published Anki deck with a new candidate, audit update identity and educational changes, and generate text snapshots, release notes and website metadata. Source packages stay outside this Git repository. This tool never runs Anki, imports a package, changes a live collection, repacks a deck, stages files, commits, pushes, uploads or deploys anything.
+Compare a previously published Anki deck with a new candidate, audit update identity and educational changes, and generate text snapshots, release notes and website metadata. Source packages stay outside this Git repository. The release commands never run Anki, import a package, change a live collection, repack a deck, stage files, commit, push, upload or deploy anything. The separate private maintainer pilot can explicitly apply human-approved field changes to a new local package; see below.
 
 ## One-command release workflow
 
@@ -197,3 +197,7 @@ Format and import references consulted for this implementation:
 8. Keep that original candidate as the baseline for the next export. Run the same workflow with new paths/dates; no source-code edits are required.
 
 `.gitignore` excludes packages, extracted Anki databases, media, temporary files, the environment, Python caches and macOS metadata. Ignore rules do not remove already tracked files; the separate index guard checks that case. Nothing in this repository automates Git commit/push or public distribution.
+
+## Private maintainer pilot
+
+The separate [private maintainer guide](docs/private-maintainer.md) documents the bounded Pediatric ENT proposal → human review → preview → explicit copy-on-write patch workflow. Start the prepared local review queue with `.venv/bin/python maintainer.py serve`. Private data lives in ignored `private-audit/`; no website output is generated.
