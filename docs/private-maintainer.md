@@ -12,13 +12,17 @@ From `CrabsChangeLog`:
 .venv/bin/python maintainer.py serve
 ```
 
-Open http://127.0.0.1:8765. Confirm the batch and proposal count, enter your reviewer name, then choose **Start Review**. The last name is remembered locally when browser storage is available; every new page session still requires Start Review. Review one proposal at a time using **Approve (A)**, **Reject (R)**, **Defer (D)**, or **Edit + Approve (E)**. Shortcuts are inactive inside inputs and buttons. Original and proposed text use red strikethrough deletions and green underlined additions; exact HTML is displayed as text.
+Open http://127.0.0.1:8765. Confirm the batch and field-unit count, enter your reviewer name, then choose **Start Review**. The last name is remembered locally when browser storage is available; every new page session still requires Start Review. A field with a finding supports **Approve (A)**, **Reject (R)**, **Defer (D)**, **Needs research (N)**, or **Edit + Approve (E)**. A sibling field with no finding supports **Reviewed unchanged (U)**. Decisions apply only to the displayed field/finding. Shortcuts are inactive inside inputs and buttons. Original and proposed text use red strikethrough deletions and green underlined additions; exact HTML is displayed as text.
 
-Each action waits for the database commit, displays the saved decision and reviewer, then advances to the next unreviewed proposal. A failed save leaves the proposal and any draft in place. Previous/Next only navigate. Revisited proposals show the saved decision, reviewer, timestamp, and append-only history. Edit opens a plain text area with **Save & Approve** and **Cancel**; unsaved changes require confirmation before leaving. Existing HTML/media/cloze protections remain enforced. Completion shows counts of each latest saved outcome, including edited approvals (final text differs from the automated proposal). Refresh/restart reloads saved decisions from SQLite; unsaved drafts are not persisted.
+Each action waits for the database commit, displays the saved decision and reviewer, then advances to the next unresolved field on the same note when possible. The interface shows each field as pending or resolved and derives the note state as unreviewed, partially reviewed, or complete. Resolved fields are skipped when a session resumes. A failed save leaves the field and any draft in place. Previous/Next only navigate. Revisited findings show the saved decision, reviewer, timestamp, and append-only history. Edit opens a plain text area with **Save & Approve** and **Cancel**; unsaved changes require confirmation before leaving. Existing HTML/media/cloze protections remain enforced. Refresh/restart reloads saved decisions from SQLite; unsaved drafts are not persisted.
+
+While resolving a finding, its note-field buttons are selectable. **Edit fields + Approve (E)** starts one resolution workspace in which the reviewer can move between Text, Extra, or another field without losing drafts. Every field starts at its exact current value; use **Use automated proposal** on the finding field when that proposal is desired. Saving records only fields whose values actually changed. Switching fields does not create a finding, resolve the sibling field, or alter the immutable field/category/provenance of the finding that prompted the work.
+
+Cross-field editing exists because the safest correction is sometimes to preserve a concise atomic retrieval target in Text while adding nuance, limitations, or clinical context to Extra. A resolution may therefore leave the finding field unchanged and edit another field, or edit several fields together. All edits in that resolution share one review decision and are applied atomically to the note.
 
 The interface retains source fields, tags, GUID and evidence details. Use **Preview approved patch** or the `preview` command below to inspect approvals.
 
-Approval only saves a decision. Closing/restarting the application retains all decisions. Research-only findings cannot be approved: import a new evidence-backed proposal when research is complete. Editing and approving is a human assertion; substantively changed clinical text requires the reviewer to check its evidence. The prototype does not judge evidence quality or whether edited text is medically supported.
+Approval only saves a decision. Closing/restarting the application retains all decisions. A research-required automated proposal cannot be blindly approved. After doing the research, however, a reviewer may enter a human correction and must record a research/evidence note with that approval; the note and exact field edits remain in append-only history. Editing and approving is a human assertion, and substantively changed clinical text requires the reviewer to check its evidence. The prototype records that provenance but does not judge evidence quality or whether edited text is medically supported.
 
 After review:
 
@@ -53,7 +57,7 @@ Read current coverage or export portable history:
 
 `crabs/maintainer.py` implements coverage, proposals, reviews, and patches. `crabs/maintainer_patch.py` copies and patches APKG packages. `crabs/maintainer_ui.py` is a replaceable local browser interface. The root `maintainer.py` provides commands.
 
-The SQLite history has five append-only tables:
+The SQLite history has seven append-only tables:
 
 | Table | Durable information |
 | --- | --- |
@@ -61,9 +65,11 @@ The SQLite history has five append-only tables:
 | audits | Export hash, GUID, relevant-content fingerprint, audit logic version, date, outcome |
 | findings | Deterministic finding ID, source hash, complete immutable finding JSON |
 | reviews | Finding ID, status, reviewer, final edited text, optional comment, timestamp; every subsequent decision adds a row |
+| field_reviews | Source hash, GUID, field, unchanged disposition, reviewer, comment, timestamp; every disposition or reset adds a row |
+| review_edits | Review and prompting-finding IDs, GUID, changed field, exact before/after values, and timestamp for every human-directed resolution edit |
 | applications | Validation reports and approved changes for applied output packages |
 
-Database triggers reject updates/deletes to historical records. Application code uses transactions. The latest review event determines current status; older decisions remain available. Audit outcomes are `proposals` or `no_issue_identified`. **No issue identified does not mean verified medically correct.** AI proposals enter as `awaiting_review`; they never enter as approved. Rejection is durable, not deletion.
+Database triggers reject updates/deletes to historical records. Application code uses transactions. The latest review event determines current status; older decisions remain available. Legacy finding decisions remain valid for the field named by the immutable finding. A one-time migration reset is a later `reset_due_to_field_granularity_migration` event, so the item becomes pending without deleting its prior decisions. Audit outcomes are `proposals` or `no_issue_identified`. **No issue identified does not mean verified medically correct.** AI proposals enter as `awaiting_review`; they never enter as approved. Rejection is durable, not deletion.
 
 ## Finding import schema
 
@@ -105,7 +111,7 @@ Tags and nonclinical note metadata do not affect this clinical fingerprint. A ta
 
 ## Patching and validation limits
 
-Only complete approved field replacements are supported. **Tag changes, new/deleted notes/cards, changed cloze ordinals/delimiters, and changed HTML/media/link tokens are intentionally blocked in this pilot.** The schema displays empty tag changes; it does not claim tag-edit support. Plain text inside existing markup/clozes can change. Guardrails are structural, not a complete Anki renderer or clinical validator.
+Only complete approved field replacements are supported. One approved resolution may contain several replacements on the same note; they retain their relationship to the prompting finding and are applied in one package transaction. **Tag changes, new/deleted notes/cards, changed cloze ordinals/delimiters, and changed HTML/media/link tokens are intentionally blocked in this pilot.** The schema displays empty tag changes; it does not claim tag-edit support. Plain text inside existing markup/clozes can change. Guardrails are structural, not a complete Anki renderer or clinical validator.
 
 The writer extracts only a temporary authoritative database and changes approved note fields using GUID + ID + exact old value. It preserves note IDs/GUIDs, cards/scheduling, tags (including raw study-state tags), models/decks, media, and the compatibility database. Required changed-note metadata is explicit: `mod` advances, `usn` becomes -1 when present, and first/sort-field cache columns are updated when applicable. First/sort-field updates involving media/script/style/comments are rejected by the pilot cache adapter. No cards are regenerated; edits requiring card-generation changes are unsupported.
 

@@ -15,6 +15,7 @@ def run():
     commands = parser.add_subparsers(dest='command', required=True)
     p = commands.add_parser('ingest'); p.add_argument('package'); p.add_argument('--version', required=True)
     p = commands.add_parser('import-findings'); p.add_argument('file', type=Path)
+    p = commands.add_parser('reset-reviews'); p.add_argument('--date', required=True); p.add_argument('--timezone', default='America/New_York')
     commands.add_parser('coverage')
     p = commands.add_parser('serve'); p.add_argument('--port', type=int, default=8765)
     p = commands.add_parser('preview'); p.add_argument('--output', type=Path)
@@ -32,6 +33,8 @@ def run():
             print(json.dumps(store.import_findings(json.loads(args.file.read_text()))))
         elif args.command == 'coverage':
             report = store.coverage(); report.pop('notes'); print(json.dumps(report, indent=2))
+        elif args.command == 'reset-reviews':
+            print(json.dumps(store.reset_reviews_for_local_date(args.date, args.timezone), indent=2))
         elif args.command == 'preview':
             patch = store.patch(); print(preview(patch))
             if args.output:
@@ -43,7 +46,7 @@ def run():
             report = apply_patch(store, json.loads(args.patch.read_text()), args.output, args.confirm)
             print(f"{report['status']}: {report['notes_affected']} notes changed. Report: {args.output.with_suffix('.validation.json')}")
         elif args.command == 'export-history':
-            tables = ('exports', 'audits', 'findings', 'reviews', 'applications')
+            tables = ('exports', 'audits', 'findings', 'reviews', 'field_reviews', 'review_edits', 'applications')
             with args.output.open('x') as f:
                 json.dump({t: [dict(r) for r in store.db.execute('SELECT * FROM '+t)] for t in tables}, f, indent=2, ensure_ascii=False)
     finally:

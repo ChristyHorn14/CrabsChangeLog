@@ -26,8 +26,11 @@ def fixture(path, modern=False):
     for i in range(15):
         front = '{{c1::Original}} α ≥ 5 <b>text</b>'
         back = 'Answer <a href="https://example.org">link</a><img src="image.png">[sound:voice.mp3]'
+        tags = ' Crabs::Specialty::Peds marked '
+        if i < 10:
+            tags += 'Crabs::Residency::HN::ThyroidCancer '
         db.execute('INSERT INTO notes VALUES(?,?,?,?,?,?,?,?,?,?)',
-                   (100+i, 'guid-'+str(i), 10, ' Crabs::Specialty::Peds marked ', front+'\x1f'+back, 100, '', 0, front, 1))
+                   (100+i, 'guid-'+str(i), 10, tags, front+'\x1f'+back, 100, '', 0, front, 1))
         db.execute('INSERT INTO cards VALUES(?,?,?,?,?,?)', (200+i, 100+i, 20, 0, 0, 999))
     # A renamed IO note type must still be excluded by fields/template signal.
     if modern:
@@ -177,6 +180,19 @@ class MaintainerTests(unittest.TestCase):
             with self.assertRaises(ValueError):self.store.import_findings(b)
         self.assertEqual(self.store.findings(),[])
 
+    def test_residency_hn_scope_import(self):
+        bundle = {'source_sha256': self.key,
+                  'scope': 'Residency Head and Neck',
+                  'sample_guids': ['guid-'+str(i) for i in range(10)],
+                  'audit_version': 'residency-hn-test-v1',
+                  'author': 'synthetic test', 'findings': []}
+        self.assertEqual(self.store.import_findings(bundle), [])
+        self.assertEqual(self.store.db.execute(
+            'SELECT COUNT(*) FROM audits WHERE version=?', ('residency-hn-test-v1',)).fetchone()[0], 10)
+        bundle['scope'] = 'Unknown'
+        with self.assertRaises(ValueError):
+            self.store.import_findings(bundle)
+
     def test_stale_original_and_missing_evidence_blocked(self):
         for kind in ('stale','evidence','category'):
             b=self.bundle()
@@ -230,3 +246,161 @@ class MaintainerTests(unittest.TestCase):
     def test_identity_uses_guid_not_text(self):
         # All synthetic notes deliberately have identical text but distinct GUIDs.
         self.reviewed(); self.assertEqual([c['guid'] for c in self.store.patch()['changes']], ['guid-0','guid-3'])
+
+    def two_field_bundle(self, extra_research=False):
+        n=self.snapshot['notes']['100']; front=n['fields'][0]['value']; back=n['fields'][1]['value']
+        findings=[{'guid':'guid-0','field':'Front','original':front,
+                   'replacement':front.replace('Original','Revised'),'category':'ambiguous_wording',
+                   'severity':'low','confidence':'high','rationale':'front finding',
+                   'evidence_status':'editorial','evidence':[]}]
+        if extra_research:
+            findings=[{'guid':'guid-0','field':'Back','original':back,'replacement':None,
+                       'category':'outdated_guideline','severity':'high','confidence':'medium',
+                       'rationale':'back needs research','evidence_status':'needs_research','evidence':[]}]
+        return {'source_sha256':self.key,'sample_guids':['guid-'+str(i) for i in range(15)],
+                'audit_version':'field-test','author':'test','findings':findings}
+
+    def test_text_correct_extra_needs_research(self):
+        ids=self.store.import_findings(self.two_field_bundle(True)); q=self.store.review_queue()
+        front=next(u for u in q['units'] if u['field']=='Front'); back=next(u for u in q['units'] if u['field']=='Back')
+        self.assertEqual(front['kind'],'unchanged'); self.assertEqual(back['kind'],'finding')
+        self.store.field_review(self.key,'guid-0','Front','reviewed_unchanged','human',0)
+        self.store.review(ids[0],'needs_research','human')
+        self.assertEqual(self.store.review_queue()['notes'][0]['status'],'complete')
+
+    def test_extra_correct_text_change_and_partial_queue(self):
+        ids=self.store.import_findings(self.two_field_bundle()); self.store.review(ids[0],'approved','human')
+        q=self.store.review_queue(); note=q['notes'][0]
+        self.assertEqual(note['status'],'partially_reviewed')
+        pending=[u for u in q['units'] if not u['resolved']]
+        self.assertEqual([(u['field'],u['kind']) for u in pending],[('Back','unchanged')])
+        self.store.field_review(self.key,'guid-0','Back','reviewed_unchanged','human',0)
+        self.assertEqual(self.store.review_queue()['notes'][0]['status'],'complete')
+
+    def test_changes_in_both_fields_and_independent_application(self):
+        b=self.two_field_bundle(); n=self.snapshot['notes']['100']; back=n['fields'][1]['value']
+        b['findings'].append({'guid':'guid-0','field':'Back','original':back,
+            'replacement':back.replace('Answer','Changed'),'category':'ambiguous_wording','severity':'low',
+            'confidence':'high','rationale':'back finding','evidence_status':'editorial','evidence':[]})
+        ids=self.store.import_findings(b); self.store.review(ids[0],'approved','human')
+        self.assertEqual([c['field'] for c in self.store.patch()['changes']],['Front'])
+        q=self.store.review_queue(); self.assertEqual(q['notes'][0]['status'],'partially_reviewed')
+        self.store.review(ids[1],'deferred','human')
+        self.assertEqual(q['units'][1]['field'],'Back')
+        self.assertEqual(self.store.review_queue()['notes'][0]['status'],'complete')
+
+    def test_extra_approved_while_text_unresolved(self):
+        b=self.two_field_bundle(); n=self.snapshot['notes']['100']; back=n['fields'][1]['value']
+        b['findings'].append({'guid':'guid-0','field':'Back','original':back,
+            'replacement':back.replace('Answer','Changed'),'category':'ambiguous_wording','severity':'low',
+            'confidence':'high','rationale':'back finding','evidence_status':'editorial','evidence':[]})
+        ids=self.store.import_findings(b); self.store.review(ids[1],'approved','human')
+        self.assertEqual(self.store.review_queue()['notes'][0]['status'],'partially_reviewed')
+        self.assertEqual([(c['field'],c['replacement']) for c in self.store.patch()['changes']],
+                         [('Back',back.replace('Answer','Changed'))])
+
+    def test_legacy_decision_interpreted_as_field_resolution(self):
+        ids=self.store.import_findings(self.two_field_bundle()); self.store.review(ids[0],'rejected','legacy')
+        q=self.store.review_queue(); front=next(u for u in q['units'] if u['field']=='Front')
+        self.assertTrue(front['resolved']); self.assertEqual(front['finding']['review']['status'],'rejected')
+
+    def test_reset_date_is_append_only_and_prior_day_untouched(self):
+        ids=self.store.import_findings(self.bundle())
+        with self.store.db:
+            self.store.db.execute('INSERT INTO reviews(finding_id,status,final,reviewer,comment,created) VALUES(?,?,?,?,?,?)',
+                                  (ids[0],'rejected',None,'human','','2026-09-25T16:00:00+00:00'))
+            self.store.db.execute('INSERT INTO reviews(finding_id,status,final,reviewer,comment,created) VALUES(?,?,?,?,?,?)',
+                                  (ids[1],'deferred',None,'human','','2026-09-26T16:00:00+00:00'))
+        result=self.store.reset_reviews_for_local_date('2026-09-26','America/New_York')
+        self.assertEqual(result['historical_review_actions'],1); self.assertEqual(result['findings_returned_to_pending'],1)
+        fs=self.store.findings(); self.assertEqual(fs[0]['review']['status'],'rejected'); self.assertEqual(fs[1]['review']['status'],'awaiting_review')
+        self.assertEqual(self.store.db.execute('SELECT COUNT(*) FROM reviews').fetchone()[0],3)
+        again=self.store.reset_reviews_for_local_date('2026-09-26','America/New_York')
+        self.assertEqual(again['findings_returned_to_pending'],0)
+
+    def test_reviewed_unchanged_never_creates_patch_or_blank(self):
+        self.store.import_findings(self.two_field_bundle(True))
+        self.store.field_review(self.key,'guid-0','Front','reviewed_unchanged','human',0)
+        self.assertEqual(self.store.patch()['changes'],[])
+
+    def test_cross_field_resolution_text_unchanged_extra_edited(self):
+        ids=self.store.import_findings(self.two_field_bundle()); n=self.snapshot['notes']['100']
+        back=n['fields'][1]['value']; revised=back.replace('Answer','Qualified answer')
+        self.store.review(ids[0],'approved','human',edits=[{'field':'Back','original':back,'final':revised}])
+        f=self.store.findings()[0]
+        self.assertEqual(f['field'],'Front'); self.assertIsNone(f['review']['final'])
+        self.assertEqual([(e['finding_id'],e['field'],e['original'],e['final']) for e in f['review']['edits']],
+                         [(ids[0],'Back',back,revised)])
+        self.assertEqual(len(self.store.findings()),1)  # No fabricated Back finding.
+        change=self.store.patch()['changes'][0]
+        self.assertEqual((change['field'],change['finding_field'],change['consequential']),('Back','Front',True))
+
+    def test_cross_field_resolution_edits_text_and_extra(self):
+        ids=self.store.import_findings(self.two_field_bundle()); n=self.snapshot['notes']['100']
+        front=n['fields'][0]['value']; back=n['fields'][1]['value']
+        edits=[{'field':'Front','original':front,'final':front.replace('Original','Focused')},
+               {'field':'Back','original':back,'final':back.replace('Answer','Qualified')}]
+        self.store.review(ids[0],'approved','human',edits=edits)
+        patch=self.store.patch(); self.assertEqual([c['field'] for c in patch['changes']],['Back','Front'])
+        self.assertEqual({c['consequential'] for c in patch['changes'] if c['field']=='Back'},{True})
+        self.assertEqual({c['consequential'] for c in patch['changes'] if c['field']=='Front'},{False})
+
+    def test_extra_finding_can_prompt_text_edit(self):
+        b=self.two_field_bundle(); n=self.snapshot['notes']['100']; front=n['fields'][0]['value']; back=n['fields'][1]['value']
+        b['findings'][0].update(field='Back',original=back,replacement=back.replace('Answer','Revised answer'))
+        ids=self.store.import_findings(b)
+        self.store.review(ids[0],'approved','human',edits=[{'field':'Front','original':front,'final':front.replace('Original','Focused')}])
+        c=self.store.patch()['changes'][0]
+        self.assertEqual((c['field'],c['finding_field'],c['consequential']),('Front','Back',True))
+
+    def test_independent_findings_keep_independent_statuses_with_cross_edit(self):
+        b=self.two_field_bundle(); n=self.snapshot['notes']['100']; front=n['fields'][0]['value']; back=n['fields'][1]['value']
+        b['findings'].append({'guid':'guid-0','field':'Back','original':back,
+            'replacement':back.replace('Answer','Changed'),'category':'ambiguous_wording','severity':'low',
+            'confidence':'high','rationale':'back finding','evidence_status':'editorial','evidence':[]})
+        ids=self.store.import_findings(b)
+        self.store.review(ids[0],'approved','human',edits=[{'field':'Front','original':front,'final':front.replace('Original','Focused')}])
+        fs=self.store.findings(); self.assertEqual(fs[0]['review']['status'],'approved'); self.assertEqual(fs[1]['review']['status'],'awaiting_review')
+        self.assertEqual(self.store.review_queue()['notes'][0]['status'],'partially_reviewed')
+
+    def test_cross_field_resolution_applies_atomically(self):
+        ids=self.store.import_findings(self.two_field_bundle()); n=self.snapshot['notes']['100']; front=n['fields'][0]['value']; back=n['fields'][1]['value']
+        edits=[{'field':'Front','original':front,'final':front.replace('Original','Focused')},
+               {'field':'Back','original':back,'final':back.replace('Answer','Qualified')}]
+        self.store.review(ids[0],'approved','human',edits=edits); patch=self.store.patch()
+        out=self.root/'cross-field.apkg'; apply_patch(self.store,patch,out,patch['id']); result,_=read_package(out)
+        values={f['name']:f['value'] for f in result['notes']['100']['fields']}
+        self.assertIn('Focused',values['Front']); self.assertIn('Qualified',values['Back'])
+        self.assertEqual(self.store.db.execute('SELECT COUNT(*) FROM applications').fetchone()[0],1)
+
+    def test_cross_field_resolution_is_atomic_on_validation_failure(self):
+        ids=self.store.import_findings(self.two_field_bundle()); n=self.snapshot['notes']['100']; front=n['fields'][0]['value']; back=n['fields'][1]['value']
+        with self.assertRaises(ValueError):
+            self.store.review(ids[0],'approved','human',edits=[
+                {'field':'Front','original':front,'final':front.replace('Original','Focused')},
+                {'field':'Back','original':back,'final':back.replace('image.png','other.png')}])
+        self.assertEqual(self.store.db.execute('SELECT COUNT(*) FROM reviews').fetchone()[0],0)
+        self.assertEqual(self.store.db.execute('SELECT COUNT(*) FROM review_edits').fetchone()[0],0)
+
+    def test_research_required_allows_documented_human_correction_only(self):
+        b=self.two_field_bundle(True); ids=self.store.import_findings(b); n=self.snapshot['notes']['100']
+        front=n['fields'][0]['value']; revised=front.replace('Original','Evidence-backed')
+        with self.assertRaisesRegex(ValueError,'research/evidence note'):
+            self.store.review(ids[0],'approved','human',edits=[
+                {'field':'Front','original':front,'final':revised}])
+        self.store.review(ids[0],'approved','human',comment='Checked current guideline, section 4',edits=[
+            {'field':'Front','original':front,'final':revised}])
+        f=self.store.findings()[0]
+        self.assertEqual(f['review']['comment'],'Checked current guideline, section 4')
+        self.assertEqual(f['review']['edits'][0]['final'],revised)
+
+    def test_cross_field_edit_and_provenance_survive_reopen(self):
+        ids=self.store.import_findings(self.two_field_bundle()); n=self.snapshot['notes']['100']
+        back=n['fields'][1]['value']; revised=back.replace('Answer','Persisted context')
+        self.store.review(ids[0],'approved','human',comment='evidence note',edits=[
+            {'field':'Back','original':back,'final':revised}])
+        path=self.store.path; self.store.close(); self.store=Store(path)
+        f=self.store.findings()[0]; edit=f['review']['edits'][0]
+        self.assertEqual((f['field'],edit['field'],edit['finding_id']),('Front','Back',ids[0]))
+        self.assertEqual((edit['original'],edit['final']),(back,revised))
+        self.assertEqual((f['review']['reviewer'],f['review']['comment']),('human','evidence note'))
