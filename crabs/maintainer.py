@@ -21,6 +21,7 @@ CATEGORIES = ('clinical_accuracy', 'outdated_recommendation', 'outdated_guidelin
               'card_construction', 'cloze_construction', 'answer_leakage',
               'excessive_information', 'low_value', 'extra_field', 'organization')
 SEVERITIES = ('low', 'moderate', 'high', 'critical')
+DISPOSITIONS = ('retain', 'revise', 'split', 'delete', 'replace')
 
 
 def now():
@@ -114,6 +115,16 @@ def guard_edit(old, new):
     require(Counter(re.findall(r'\{\{c\d+::', new)) == Counter(re.findall(r'\{\{c\d+::', old)), 'Cloze mismatch')
 
 
+def proposed_changes(finding):
+    """Return normalized automated field changes, including legacy single-field findings."""
+    if 'proposed_changes' in finding:
+        return finding['proposed_changes']
+    if finding.get('replacement') is None:
+        return []
+    return [{'field': finding['field'], 'original': finding['original'],
+             'final': finding['replacement']}]
+
+
 class Store:
     def __init__(self, path):
         self.path = Path(path)
@@ -187,10 +198,17 @@ class Store:
         scope = bundle.get('scope', SPECIALTY)
         require(scope in (SPECIALTY, RESIDENCY_HN), 'Unknown audit scope')
         guids = bundle['sample_guids']
-        require(10 <= len(guids) <= 20 and len(set(guids)) == len(guids), 'Pilot requires 10–20 unique notes')
+        reprocess = bundle.get('reprocess') is True
+        require((1 <= len(guids) <= 500 if reprocess else 10 <= len(guids) <= 20)
+                and len(set(guids)) == len(guids),
+                'Reprocessing requires 1–500 unique notes' if reprocess else 'Pilot requires 10–20 unique notes')
         for guid in guids:
             require(guid in notes and audit_scope(notes[guid], scope) and not excluded(s, notes[guid]), 'Ineligible pilot note')
         findings = []; timestamp = now()
+        schema = bundle.get('schema', 1); evidence_backed = schema >= 2
+        if evidence_backed:
+            require(bundle.get('audit_stage') == 'evidence_backed',
+                    'Schema 2 findings must come from the evidence-backed audit stage')
         for raw in bundle['findings']:
             f = copy.deepcopy(raw); guid = f['guid']
             require(guid in guids, 'Finding outside pilot')
@@ -199,16 +217,58 @@ class Store:
             require(f['category'] in CATEGORIES and f['severity'] in SEVERITIES, 'Unknown category/severity')
             require(f['confidence'] in ('low', 'medium', 'high'), 'Unknown confidence')
             require(f['evidence_status'] in ('supported', 'editorial', 'needs_research'), 'Unknown evidence status')
+            if evidence_backed and f['evidence_status'] == 'needs_research':
+                require(f.get('research_attempted') is True and bool(f.get('research_limitations')),
+                        'needs_research requires a documented research attempt and limitations')
             require(bool(f['rationale']), 'Rationale required')
             if f['evidence_status'] == 'supported':
                 require(bool(f['evidence']), 'Evidence required')
             for evidence in f['evidence']:
                 require(all(evidence.get(k) for k in ('title', 'organization_authors', 'publication', 'year', 'url')), 'Incomplete citation')
                 require(evidence['url'].startswith('https://'), 'Evidence URL must be HTTPS')
-            if f['replacement'] is not None:
-                guard_edit(f['original'], f['replacement'])
-            else:
-                require(f['evidence_status'] == 'needs_research', 'Only research findings may omit replacement')
+            changes = proposed_changes(f)
+            if schema >= 3:
+                unresolved = f['evidence_status'] == 'needs_research' and not changes
+                require(f.get('disposition') in DISPOSITIONS or unresolved and f.get('disposition') is None,
+                        'Actionable disposition required unless research remains unresolved')
+                require(bool(f.get('researched_conclusion')), 'Researched conclusion required')
+                require(isinstance(f.get('remaining_uncertainty', ''), str), 'Remaining uncertainty must be text')
+                require(isinstance(changes, list), 'proposed_changes must be a list')
+                require(len({c.get('field') for c in changes}) == len(changes), 'Duplicate proposed field change')
+                if f.get('disposition') == 'revise' and not unresolved:
+                    require(bool(changes), 'Revise disposition requires an exact proposed field change')
+                elif f.get('disposition') != 'revise' and not unresolved:
+                    require(not changes, 'Only revise may contain direct field changes')
+                if f['evidence_status'] != 'needs_research':
+                    require(bool(changes) or f['disposition'] in ('retain', 'split', 'delete', 'replace'),
+                            'Evidence-backed finding requires an actionable proposal or disposition')
+            for change in changes:
+                require(set(change) >= {'field', 'original', 'final'}, 'Incomplete proposed field change')
+                require(change['field'] in values and change['original'] == values[change['field']],
+                        'Stale proposed field original')
+                guard_edit(change['original'], change['final'])
+            if schema < 3:
+                if f['replacement'] is not None:
+                    guard_edit(f['original'], f['replacement'])
+                else:
+                    require(f['evidence_status'] == 'needs_research', 'Only research findings may omit replacement')
+            elif f['evidence_status'] == 'needs_research' and not changes:
+                require(f.get('research_attempted') is True and bool(f.get('research_limitations')),
+                        'Null proposal is allowed only after unresolved research')
+                require(f['confidence'] != 'high',
+                        'High-confidence evidence-backed findings require synthesis into an actionable proposal')
+            if schema >= 3:
+                f['proposed_changes'] = changes
+            own_change = next((c for c in changes if c['field'] == f['field']), None)
+            f['replacement'] = own_change['final'] if own_change else None
+            if reprocess:
+                prior_id = f.get('supersedes_finding_id')
+                prior = next((old for old in self.findings() if old['id'] == prior_id), None)
+                require(prior is not None and prior['source_sha256'] == export['id'], 'Unknown backfill source finding')
+                require(prior['guid'] == guid and prior['review']['status'] != 'approved',
+                        'Backfill may not supersede an approved or different finding')
+                require(not proposed_changes(prior) and prior['evidence_status'] != 'editorial',
+                        'Backfill source must be a substantive null-proposal finding')
             f.update(note_id=n['id'], card_ids=[c['id'] for c in s['cards'].values() if c['note_id'] == n['id']],
                      specialty=scope, subspecialty=next((t.split('::')[-1] for t in n['tags']
                                                         if ('Chapter9' in t if scope == SPECIALTY else t.startswith('Crabs::Residency::HN::'))), scope),
@@ -239,7 +299,26 @@ class Store:
                 'SELECT * FROM review_edits WHERE review_id=? ORDER BY id', (review['id'],))]
                 if review and review['status'] != RESET_STATUS else [])
             result.append(f)
+        superseded = {f.get('supersedes_finding_id'): f['id'] for f in result
+                      if f.get('supersedes_finding_id')}
+        for f in result:
+            f['superseded_by'] = superseded.get(f['id'])
         return result
+
+    def backfill_candidates(self, key=None):
+        """Export current actionable-null findings for an external evidence-capable runner."""
+        export = self.export(key); notes = by_guid(export['snapshot']); items = []
+        eligible_statuses = ('awaiting_review', 'needs_research', 'deferred')
+        for f in self.findings():
+            if (f['source_sha256'] != export['id'] or f['review']['status'] not in eligible_statuses
+                    or f['superseded_by'] or proposed_changes(f) or f['evidence_status'] == 'editorial'):
+                continue
+            items.append({'supersedes_finding_id': f['id'], 'prior_review': f['review'],
+                          'finding': {k: v for k, v in f.items() if k not in ('review', 'superseded_by')},
+                          'note': notes[f['guid']]})
+        return {'schema': 3, 'task': 'evidence_backed_reprocess', 'reprocess': True,
+                'source_sha256': export['id'], 'source_version': export['version'],
+                'candidate_count': len(items), 'candidates': items}
 
     def review(self, finding_id, status, reviewer, final=None, comment='', expected_review_id=None, edits=None):
         require(status in STATUSES and status != 'awaiting_review', 'Invalid review decision')
@@ -257,9 +336,14 @@ class Store:
                     require(edits is not None and isinstance(comment, str) and comment.strip(),
                             'Research-required findings need a human edit and a research/evidence note')
                 if edits is None:
-                    final = f['replacement'] if final is None else final
-                    edits = [{'field': f['field'], 'original': f['original'], 'final': final}]
-                require(isinstance(edits, list) and bool(edits), 'Approved resolution requires at least one changed field')
+                    edits = ([{'field': f['field'], 'original': f['original'], 'final': final}]
+                             if final is not None else proposed_changes(f))
+                    if not edits and f.get('disposition') not in ('retain', 'split', 'delete', 'replace'):
+                        final = f['replacement']
+                        edits = [{'field': f['field'], 'original': f['original'], 'final': final}]
+                require(isinstance(edits, list), 'Approved resolution edits must be a list')
+                require(bool(edits) or f.get('disposition') in ('retain', 'split', 'delete', 'replace'),
+                        'Approved resolution requires field changes or an explicit non-patch disposition')
                 require(len({e.get('field') for e in edits}) == len(edits), 'Duplicate field in resolution')
                 normalized = []
                 for edit in edits:
@@ -300,7 +384,8 @@ class Store:
     def review_queue(self, key=None):
         """Return field-aware review units and aggregate note status for the selected export."""
         export = self.export(key); notes = by_guid(export['snapshot'])
-        findings = [f for f in self.findings() if f['source_sha256'] == export['id']]
+        findings = [f for f in self.findings()
+                    if f['source_sha256'] == export['id'] and not f['superseded_by']]
         by_note = {}
         for f in findings:
             by_note.setdefault(f['guid'], []).append(f)
@@ -384,6 +469,9 @@ class Store:
             require(fingerprint(s, n) == f['note_fingerprint'], 'Stale proposal')
             resolution = f['review'].get('edits') or [{'field': f['field'], 'original': f['original'],
                                                        'final': f['review']['final']}]
+            if (not f['review'].get('edits') and f.get('disposition') in
+                    ('retain', 'split', 'delete', 'replace')):
+                resolution = []
             values = {v['name']: v['value'] for v in n['fields']}
             for edit in resolution:
                 require(edit['field'] in values and values[edit['field']] == edit['original'], 'Stale approved field')

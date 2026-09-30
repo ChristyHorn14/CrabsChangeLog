@@ -208,6 +208,93 @@ class MaintainerTests(unittest.TestCase):
         self.store.review(ids[0],'deferred','human')
         self.assertEqual(self.store.patch()['changes'],[])
 
+    def test_evidence_backed_import_requires_research_attempt_before_deferral(self):
+        b=self.bundle(); b['schema']=2; b['audit_stage']='evidence_backed'
+        b['findings'][0]['replacement']=None; b['findings'][0]['evidence_status']='needs_research'
+        with self.assertRaisesRegex(ValueError,'documented research attempt'):
+            self.store.import_findings(b)
+        b['findings'][0]['research_attempted']=True
+        b['findings'][0]['research_limitations']='Authoritative sources conflict on the population and threshold.'
+        self.assertEqual(len(self.store.import_findings(b)),len(b['findings']))
+
+    def schema3_bundle(self, disposition='revise', changes=None):
+        b=self.bundle(); n=self.snapshot['notes']['100']; front=n['fields'][0]['value']
+        b.update(schema=3,audit_stage='evidence_backed',audit_version='evidence-v3')
+        f=b['findings'][0]
+        f.update(evidence_status='supported',evidence=[{
+            'title':'Guideline','organization_authors':'Society','publication':'Journal',
+            'year':2026,'url':'https://example.org/guideline'}],
+            researched_conclusion='The evidence supports an exact actionable result.',
+            disposition=disposition,remaining_uncertainty='Low-certainty implementation detail.',
+            proposed_changes=changes if changes is not None else [{
+                'field':'Front','original':front,'final':front.replace('Original','Evidence-backed')}])
+        b['findings']=[f]
+        return b
+
+    def test_schema3_osa_style_evidence_cannot_stop_at_null_proposal(self):
+        b=self.schema3_bundle(); f=b['findings'][0]
+        f.update(proposed_changes=[],replacement=None,disposition=None,
+                 evidence_status='needs_research',research_attempted=True,
+                 research_limitations='Synthesis was not completed despite a directly relevant guideline.',
+                 rationale='High-confidence evidence-backed OSA concern')
+        with self.assertRaisesRegex(ValueError,'require synthesis'):
+            self.store.import_findings(b)
+        f.update(evidence_status='supported',disposition='revise')
+        f['proposed_changes']=[{'field':'Front','original':f['original'],
+                                'final':f['original'].replace('Original','Phenotype-specific')}]
+        ids=self.store.import_findings(b)
+        saved=next(x for x in self.store.findings() if x['id']==ids[0])
+        self.assertEqual(saved['disposition'],'revise')
+        self.assertEqual(saved['proposed_changes'][0]['field'],'Front')
+
+    def test_schema3_text_extra_and_cross_field_proposals(self):
+        n=self.snapshot['notes']['100']; front=n['fields'][0]['value']; back=n['fields'][1]['value']
+        cases=[
+            [{'field':'Front','original':front,'final':front.replace('Original','Focused')}],
+            [{'field':'Back','original':back,'final':back.replace('Answer','Qualified')}],
+            [{'field':'Front','original':front,'final':front.replace('Original','Focused')},
+             {'field':'Back','original':back,'final':back.replace('Answer','Qualified')}]]
+        for i,changes in enumerate(cases):
+            b=self.schema3_bundle(changes=changes); b['audit_version']=f'evidence-v3-{i}'
+            ids=self.store.import_findings(b); f=next(x for x in self.store.findings() if x['id']==ids[0])
+            self.assertEqual([c['field'] for c in f['proposed_changes']], [c['field'] for c in changes])
+
+    def test_nonpatch_disposition_can_be_reviewed_without_deck_change(self):
+        b=self.schema3_bundle(disposition='split',changes=[]); ids=self.store.import_findings(b)
+        before=digest_file(self.source); self.store.review(ids[0],'approved','human',edits=[])
+        self.assertEqual(self.store.patch()['changes'],[])
+        self.assertEqual(digest_file(self.source),before)
+
+    def test_backfill_selection_supersession_history_and_idempotency(self):
+        b=self.bundle()
+        for i in range(4):
+            b['findings'][i].update(replacement=None,evidence_status='needs_research')
+        ids=self.store.import_findings(b)
+        self.store.review(ids[0],'approved','human',edits=[{
+            'field':'Front','original':b['findings'][0]['original'],
+            'final':b['findings'][0]['original'].replace('Original','Human')}],comment='human evidence')
+        self.store.review(ids[1],'needs_research','human')
+        self.store.review(ids[2],'deferred','human')
+        self.store.review(ids[3],'rejected','human')
+        export=self.store.backfill_candidates()
+        selected={x['supersedes_finding_id'] for x in export['candidates']}
+        self.assertNotIn(ids[0],selected); self.assertIn(ids[1],selected); self.assertIn(ids[2],selected)
+        self.assertNotIn(ids[3],selected)
+        prior=next(x for x in export['candidates'] if x['supersedes_finding_id']==ids[1])
+        rb=self.schema3_bundle(); rb.update(reprocess=True,sample_guids=['guid-1'])
+        f=rb['findings'][0]; source=self.snapshot['notes']['101']['fields'][0]['value']
+        f.update(guid='guid-1',original=source,supersedes_finding_id=ids[1],
+                 proposed_changes=[{'field':'Front','original':source,
+                                    'final':source.replace('Original','Researched')}])
+        first=self.store.import_findings(rb); second=self.store.import_findings(rb)
+        self.assertEqual(first,second)
+        self.assertEqual(sum(x['id']==first[0] for x in self.store.findings()),1)
+        old=next(x for x in self.store.findings() if x['id']==ids[1])
+        self.assertEqual(old['review']['status'],'needs_research')
+        self.assertEqual(old['superseded_by'],first[0])
+        queue_ids={u['finding']['id'] for u in self.store.review_queue()['units'] if u['kind']=='finding'}
+        self.assertNotIn(ids[1],queue_ids); self.assertIn(first[0],queue_ids)
+
     def test_cloze_html_links_media_and_unicode(self):
         old='{{c1::α}} <b>≥</b><a href="https://example.org">link</a><img src="x.png">[sound:x.mp3]'
         guard_edit(old,old.replace('α','β'))

@@ -44,7 +44,7 @@ class ReviewSessionTests(unittest.TestCase):
 
     def test_browser_controller(self):
         root = Path(__file__).resolve().parents[1]
-        subprocess.run(['node', str(root/'tests/test_review_ui.js'), str(root/'crabs/maintainer_review_field.js')], check=True)
+        subprocess.run(['node', str(root/'tests/test_review_note_ui.js'), str(root/'crabs/maintainer_review_note.js')], check=True)
 
     def test_exact_diff(self):
         old = '<b>α old</b>\n<img src="image.png">[sound:x.mp3]'

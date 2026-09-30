@@ -201,3 +201,5 @@ Format and import references consulted for this implementation:
 ## Private maintainer pilot
 
 The separate [private maintainer guide](docs/private-maintainer.md) documents the bounded Pediatric ENT proposal → human review → preview → explicit copy-on-write patch workflow. Start the prepared local review queue with `.venv/bin/python maintainer.py serve`. Private data lives in ignored `private-audit/`; no website output is generated.
+
+Normal audit research is [Work-driven](docs/work-driven-audit.md): upload the latest deck to the Crabs Project and ask Work to `grab/audit the next batch of new cards`, or say `process the next backfill batch`. Work performs research and schema-3 synthesis before local validation/import. Separate OpenAI API credentials are optional and used only by the retained local automation runner.
