@@ -5,6 +5,13 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
 from .maintainer import Store, encoded, by_guid, preview, STATUSES, SEVERITIES, CATEGORIES, proposed_changes
 
+EXPORT_DIRECTORY = Path('/Users/chrishornung/Developer/Anki')
+
+
+def suggested_export_path():
+    from datetime import datetime
+    return str(EXPORT_DIRECTORY / f'{datetime.now().astimezone().date().isoformat()}ApprovedExport.apkg')
+
 def comparison(original, proposed):
     """Diff exact strings without rendering or modifying Anki HTML."""
     import difflib
@@ -33,7 +40,7 @@ PAGE = '''<!doctype html><html><head><meta charset="utf-8"><title>CRABS private 
 <style>body{font:16px system-ui;max-width:1150px;margin:30px auto;padding:0 16px;color:#172033}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f3f4f6;padding:12px;border-radius:6px;line-height:1.45}article{border:1px solid #b8c1cf;border-radius:10px;padding:22px;margin:18px 0;box-shadow:0 2px 10px #17203312}textarea{box-sizing:border-box;width:100%;min-height:180px;padding:12px;border:2px solid #3973b9;border-radius:7px;font:inherit;line-height:1.45;background:#fff}textarea:focus{outline:3px solid #b8d8ff;outline-offset:1px}button,input,select{margin:5px;padding:9px 12px}details{margin:12px 0}.error{color:#a00}h2{font-size:20px}h3{margin-top:18px}.note-fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field-with-finding,.field-context,.finding{border:1px solid #cbd5e1;border-radius:8px;padding:14px;margin:12px 0}.field-with-finding{border:3px solid #3973b9;background:#f7fbff}.field-context{background:#fafafa}.finding{border-left:6px solid #3973b9}.diff-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.diff-grid section{min-width:0}.diff-grid h4{margin:4px 0;color:#4b5563}.diff-grid pre{margin-top:4px;background:#f8fafc;border:1px solid #d7dde6}del{background:#ffd7d7;color:#780000;text-decoration:line-through;text-decoration-thickness:2px}ins{background:#ccefd3;color:#064d14;text-decoration:none;border-bottom:2px solid #159447}button:disabled{opacity:.48;cursor:not-allowed}nav{border-top:1px solid #ccc;margin-top:20px;padding-top:12px}@media(max-width:720px){.diff-grid,.note-fields{grid-template-columns:1fr}}</style></head><body>
 <h1>CRABS · Private maintainer review</h1><p>Approval saves a review decision; it does not modify the deck.</p>
 <p id="context">Loading batch…</p><section id="start"><label>Reviewer <input id="reviewer" placeholder="Your name" autocomplete="name"></label><button id="start-review" disabled>Start Review</button></section>
-<section id="session" hidden><p id="progress"></p><label>Show <select id="status-filter"><option value="unresolved">Unresolved notes</option><option value="all">All audited notes</option><option value="needs_research">Needs research</option><option value="deferred">Deferred</option><option value="approved">Approved</option><option value="rejected">Rejected</option></select></label><button id="refresh">Refresh saved state</button><button id="preview">Preview approved patch</button><pre id="patch" hidden></pre></section>
+<section id="session" hidden><p id="progress"></p><label>Show <select id="status-filter"><option value="unresolved">Unresolved notes</option><option value="all">All audited notes</option><option value="needs_research">Needs research</option><option value="deferred">Deferred</option><option value="approved">Approved</option><option value="rejected">Rejected</option></select></label><button id="refresh">Refresh saved state</button><button id="preview">Preview approved patch</button><pre id="patch" hidden></pre><hr><h2>Final stage</h2><button id="export-preview">Export Cleared Cards</button><label>New .apkg path <input id="export-path" size="55" placeholder="/path/to/crabs-cleared.apkg"></label><button id="export-generate" disabled>Generate Anki Package</button><pre id="export-summary" hidden></pre></section>
 <p id="message" role="status" aria-live="polite"></p><main id="queue"></main>
 <details><summary>Coverage and selected-note audit outcomes</summary><pre id="coverage"></pre><pre id="audits"></pre></details>
 <script>''' + Path(__file__).with_name('maintainer_review_note.js').read_text() + '</script></body></html>'
@@ -69,6 +76,9 @@ def serve(db_path, port=8765):
                     self.respond({'status': STATUSES, 'severity': SEVERITIES, 'category': CATEGORIES})
                 elif self.path == '/api/preview':
                     self.respond({'preview': preview(store.patch())})
+                elif self.path == '/api/export-preview':
+                    plan = store.cleared_export()
+                    self.respond({'plan': plan, 'summary': plan['counts']})
                 elif self.path == '/api/state':
                     export = store.export(); notes = by_guid(export['snapshot']); findings = store.findings()
                     findings = [f for f in findings if f['source_sha256'] == export['id'] and not f['superseded_by']]
@@ -103,7 +113,8 @@ def serve(db_path, port=8765):
                     audits = [dict(r) for r in store.db.execute('SELECT guid,outcome,version,created FROM audits WHERE export_id=?', (export['id'],))]
                     self.respond({'batch': {'id': export['id'], 'version': export['version']}, 'coverage': store.coverage(),
                                   'findings': findings, 'queue': queue['units'], 'note_statuses': queue['notes'],
-                                  'counts': counts, 'audits': audits})
+                                  'counts': counts, 'audits': audits,
+                                  'suggested_export_path': suggested_export_path()})
                 else:
                     self.respond({'error': 'Not found'}, 404)
             except (ValueError, KeyError) as e:
@@ -123,9 +134,14 @@ def serve(db_path, port=8765):
                 if not 0 < length <= 1_000_000:
                     raise ValueError('Invalid request size')
                 body = json.loads(self.rfile.read(length))
-                if self.path not in ('/api/review', '/api/field-review'):
+                if self.path not in ('/api/review', '/api/field-review', '/api/export-cleared'):
                     return self.respond({'error': 'Not found'}, 404)
-                if self.path == '/api/review':
+                if self.path == '/api/export-cleared':
+                    from .maintainer_patch import export_cleared
+                    plan = store.cleared_export()
+                    report = export_cleared(store, plan, body['output'], body['export_id'])
+                    self.respond({'generated': True, 'report': report, 'output': body['output']})
+                elif self.path == '/api/review':
                     store.review(body['id'], body['status'], body['reviewer'], body.get('final'),
                                  body.get('comment', ''), body['expected_review_id'], body.get('edits'))
                     finding = next(f for f in store.findings() if f['id'] == body['id'])

@@ -1,4 +1,5 @@
 """Copy-on-write APKG patching, with exact normalized and raw SQLite validation."""
+import copy
 import hashlib
 import html
 import json
@@ -151,3 +152,142 @@ def _apply_patch(store, patch, output, confirmation):
         json.dump(report, f, indent=2, ensure_ascii=False)
         f.write('\n')
     return report
+
+
+def export_cleared(store, plan, output, confirmation):
+    """Create a cleared-note-only APKG and verify the published artifact by re-reading it."""
+    with store.db:
+        store.db.execute('BEGIN IMMEDIATE')
+        require(confirmation == plan['id'], 'Explicit confirmation must equal the previewed export ID')
+        require(plan == store.cleared_export(plan['source_sha256']),
+                'Export plan changed or decisions are stale; preview again')
+        require(plan['cleared'], 'No cleared notes are eligible for export')
+        export = store.export(plan['source_sha256']); source = Path(export['path'])
+        output = Path(output).resolve(); manifest_path = output.with_suffix('.manifest.json')
+        validation_path = output.with_suffix('.validation.json')
+        require(output.suffix.lower() == '.apkg' and output != source.resolve(),
+                'Output must be a new .apkg path')
+        require(not output.exists() and not manifest_path.exists() and not validation_path.exists(),
+                'Output, manifest, or validation path already exists')
+        require(digest_file(source) == plan['source_sha256'], 'Source package changed')
+        original, source_audit = read_package(source)
+        source_notes = {n['guid']: n for n in original['notes'].values()}
+        selected = {n['guid']: n for n in plan['cleared']}
+        require(len(selected) == len(plan['cleared']), 'Duplicate GUID in export plan')
+        expected = {}
+        for guid, item in selected.items():
+            note = source_notes.get(guid)
+            require(note and note['id'] == item['note_id'] and note['model_id'] == item['model_id'],
+                    'Missing or ambiguous note identity')
+            revised = copy.deepcopy(note)
+            values = {f['name']: f for f in revised['fields']}
+            require(list(values) == item['field_names'], 'Field schema changed')
+            for change in item['changes']:
+                require(values[change['field']]['value'] == change['before'], 'Stale export field')
+                values[change['field']]['value'] = change['after']
+            expected[guid] = revised
+
+        member = source_audit['collection_member']; modern = source_audit['package_version'] == 3
+        output.parent.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(prefix='crabs-cleared-', dir=output.parent) as temp_name:
+            temp = Path(temp_name); dbpath = temp/'collection.sqlite'; candidate = temp/'candidate.apkg'
+            with zipfile.ZipFile(source) as archive:
+                with archive.open(member) as src, decoded(src, modern) as stream:
+                    dbpath.write_bytes(bounded(stream, MAX_DB))
+                db = sqlite3.connect(dbpath)
+                db.create_collation('unicase', lambda a,b: (a.casefold()>b.casefold())-(a.casefold()<b.casefold()))
+                try:
+                    note_columns = [r[1] for r in db.execute('PRAGMA table_info(notes)')]
+                    keep_note_ids = {item['note_id'] for item in plan['cleared']}
+                    keep_card_ids = {cid for item in plan['cleared'] for cid in item['card_ids']}
+                    rows = db.execute('SELECT * FROM notes').fetchall()
+                    id_index = note_columns.index('id')
+                    for row in rows:
+                        if row[id_index] not in keep_note_ids:
+                            db.execute('DELETE FROM notes WHERE id=?', (row[id_index],))
+                    card_columns = [r[1] for r in db.execute('PRAGMA table_info(cards)')]
+                    for row in db.execute('SELECT * FROM cards').fetchall():
+                        if row[card_columns.index('id')] not in keep_card_ids:
+                            db.execute('DELETE FROM cards WHERE id=?', (row[card_columns.index('id')],))
+                    tables = {r[0] for r in db.execute("SELECT name FROM sqlite_master WHERE type='table'")}
+                    if 'revlog' in tables:
+                        db.execute('DELETE FROM revlog WHERE cid NOT IN (SELECT id FROM cards)')
+                    changes = {item['note_id']: item['changes'] for item in plan['cleared'] if item['changes']}
+                    for note_id, note_changes in changes.items():
+                        matches = [row for row in rows if row[id_index] == note_id]
+                        require(len(matches) == 1, 'Missing/duplicate numeric note ID')
+                        row = dict(zip(note_columns, matches[0])); note = original['notes'][str(note_id)]
+                        require(row['guid'] == note['guid'], 'GUID mismatch')
+                        fields = row['flds'].split('\x1f'); names = [f['name'] for f in note['fields']]
+                        changed_indices = set()
+                        for change in note_changes:
+                            index = names.index(change['field'])
+                            require(fields[index] == change['before'], 'Stale raw export field')
+                            fields[index] = change['after']; changed_indices.add(index)
+                        values = {'flds': '\x1f'.join(fields), 'mod': max(int(time.time()), row['mod']+1)}
+                        if 'usn' in note_columns: values['usn'] = -1
+                        sort_index = original['models'][str(note['model_id'])].get('sortf', 0)
+                        if 'sfld' in note_columns and sort_index in changed_indices:
+                            values['sfld'] = cache_text(fields[sort_index])
+                        if 'csum' in note_columns and 0 in changed_indices:
+                            values['csum'] = int(hashlib.sha1(cache_text(fields[0]).encode()).hexdigest()[:8], 16)
+                        db.execute('UPDATE notes SET ' + ','.join(k+'=?' for k in values) +
+                                   ' WHERE id=? AND guid=?', (*values.values(), note_id, row['guid']))
+                    db.commit()
+                    require(db.execute('PRAGMA integrity_check').fetchall() == [('ok',)], 'SQLite integrity failure')
+                    require(db.execute('SELECT COUNT(*) FROM notes').fetchone()[0] == len(selected),
+                            'Unexpected note count after filtering')
+                    require({r[0] for r in db.execute('SELECT id FROM cards')} == keep_card_ids,
+                            'Unexpected card identity after filtering')
+                finally:
+                    db.close()
+                raw = dbpath.read_bytes()
+                if modern:
+                    import zstandard
+                    raw = zstandard.ZstdCompressor().compress(raw)
+                with zipfile.ZipFile(candidate, 'w') as dest:
+                    dest.comment = archive.comment
+                    for info in archive.infolist():
+                        if info.filename == member: dest.writestr(info, raw)
+                        else:
+                            with archive.open(info) as src, dest.open(info, 'w') as out:
+                                shutil.copyfileobj(src, out, 1024*1024)
+            result, _ = read_package(candidate)
+            result_by_guid = {n['guid']: n for n in result['notes'].values()}
+            require(set(result_by_guid) == set(expected), 'Post-build note identity mismatch')
+            result_cards = {c['id']: c for c in result['cards'].values()}
+            expected_card_ids = {cid for item in plan['cleared'] for cid in item['card_ids']}
+            require(set(result_cards) == expected_card_ids, 'Post-build card identity/count mismatch')
+            for guid, wanted in expected.items():
+                actual = result_by_guid[guid]
+                require(actual['id'] == wanted['id'] and actual['model_id'] == wanted['model_id'],
+                        'Post-build note identity mismatch')
+                require(actual['fields'] == wanted['fields'] and actual['tags'] == wanted['tags'],
+                        'Post-build fields/tags mismatch')
+                require(actual['media'] == wanted['media'], 'Post-build media references mismatch')
+            require(digest_file(source) == plan['source_sha256'], 'Source mutated during export')
+            require(plan == store.cleared_export(plan['source_sha256']),
+                    'Review decisions changed during export; preview again')
+            output_sha = digest_file(candidate)
+            os.link(candidate, output)
+        created = now()
+        manifest = dict(plan, export_id=plan['id'], created=created, output=str(output),
+                        output_sha256=output_sha,
+                        provenance={'generator': 'CrabsChangeLog cleared export',
+                                    'source_recovery_path': str(source.resolve()),
+                                    'audit_history_database': str(store.path.resolve())})
+        report = {'status': 'PASS', 'created': created, 'export_id': plan['id'],
+                  'source_sha256': plan['source_sha256'], 'output_sha256': output_sha,
+                  'counts': plan['counts'],
+                  'checks': ['Cleared/completed-only eligibility', 'Stable note GUID and numeric ID preservation',
+                             'Exact source card identity; no generated cards', 'Note type and field schema preservation',
+                             'Tags and media references preserved', 'Cloze structure preserved by approved-edit guard',
+                             'Source fingerprint/drift validation', 'Post-build package re-read and exact comparison',
+                             'Source package and append-only audit history unchanged'],
+                  'limitation': 'Anki packages can create notes when imported into a collection that does not already contain these GUIDs; import into the matching source collection/profile.'}
+        with manifest_path.open('x') as f:
+            json.dump(manifest, f, indent=2, ensure_ascii=False); f.write('\n')
+        with validation_path.open('x') as f:
+            json.dump(report, f, indent=2, ensure_ascii=False); f.write('\n')
+        store.db.execute('INSERT INTO applications VALUES(?,?)', (checksum(manifest), encoded(manifest)))
+        return report

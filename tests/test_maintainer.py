@@ -10,7 +10,7 @@ import zstandard
 from test_release import package
 from crabs.reader import read_package, digest_file
 from crabs.maintainer import Store, by_guid, excluded, fingerprint, guard_edit, preview
-from crabs.maintainer_patch import apply_patch
+from crabs.maintainer_patch import apply_patch, export_cleared
 
 
 def fixture(path, modern=False):
@@ -259,6 +259,11 @@ class MaintainerTests(unittest.TestCase):
             ids=self.store.import_findings(b); f=next(x for x in self.store.findings() if x['id']==ids[0])
             self.assertEqual([c['field'] for c in f['proposed_changes']], [c['field'] for c in changes])
 
+    def test_all_crabs_scope_accepts_an_eligible_note(self):
+        b=self.schema3_bundle(disposition='replace',changes=[])
+        b['scope']='All Crabs'
+        self.assertEqual(len(self.store.import_findings(b)),1)
+
     def test_nonpatch_disposition_can_be_reviewed_without_deck_change(self):
         b=self.schema3_bundle(disposition='split',changes=[]); ids=self.store.import_findings(b)
         before=digest_file(self.source); self.store.review(ids[0],'approved','human',edits=[])
@@ -294,6 +299,16 @@ class MaintainerTests(unittest.TestCase):
         self.assertEqual(old['superseded_by'],first[0])
         queue_ids={u['finding']['id'] for u in self.store.review_queue()['units'] if u['kind']=='finding'}
         self.assertNotIn(ids[1],queue_ids); self.assertIn(first[0],queue_ids)
+
+    def test_actionable_nonpatch_schema3_result_does_not_reenter_backfill(self):
+        b=self.bundle(); b['findings'][0].update(replacement=None,evidence_status='needs_research')
+        prior=self.store.import_findings(b)[0]
+        rb=self.schema3_bundle(disposition='replace',changes=[])
+        rb.update(reprocess=True,sample_guids=['guid-0'])
+        rb['findings'][0]['supersedes_finding_id']=prior
+        self.store.import_findings(rb)
+        selected={x['supersedes_finding_id'] for x in self.store.backfill_candidates()['candidates']}
+        self.assertNotIn(prior,selected)
 
     def test_cloze_html_links_media_and_unicode(self):
         old='{{c1::α}} <b>≥</b><a href="https://example.org">link</a><img src="x.png">[sound:x.mp3]'
@@ -409,6 +424,71 @@ class MaintainerTests(unittest.TestCase):
         self.store.import_findings(self.two_field_bundle(True))
         self.store.field_review(self.key,'guid-0','Front','reviewed_unchanged','human',0)
         self.assertEqual(self.store.patch()['changes'],[])
+
+    def test_cleared_export_includes_no_issue_and_only_completed_approved_revisions(self):
+        ids=self.store.import_findings(self.bundle())
+        self.store.review(ids[0],'approved','human')
+        self.store.field_review(self.key,'guid-0','Back','reviewed_unchanged','human',0)
+        self.store.review(ids[1],'rejected','human')
+        self.store.review(ids[2],'deferred','human')
+        plan=self.store.cleared_export()
+        self.assertEqual(plan['counts'],{'cleared':11,'unchanged':10,'revised':1,
+                                         'added':0,'deleted':0,'conflicts':4})
+        self.assertEqual({n['guid'] for n in plan['cleared']},
+                         {'guid-0',*[f'guid-{i}' for i in range(5,15)]})
+        self.assertEqual(next(n for n in plan['cleared'] if n['guid']=='guid-0')['status'],'revised')
+        reasons={c['guid']:c['reason'] for c in plan['conflicts']}
+        self.assertEqual(reasons['guid-1'],'review_incomplete')
+        self.assertEqual(reasons['guid-2'],'review_incomplete')
+        self.assertEqual(reasons['guid-4'],'review_incomplete')
+
+    def test_cleared_export_build_preserves_identity_and_has_no_generated_cards(self):
+        ids=self.store.import_findings(self.bundle())
+        self.store.review(ids[0],'approved','human')
+        self.store.field_review(self.key,'guid-0','Back','reviewed_unchanged','human',0)
+        plan=self.store.cleared_export(); output=self.root/'cleared.apkg'
+        report=export_cleared(self.store,plan,output,plan['id'])
+        result,_=read_package(output)
+        self.assertEqual(report['status'],'PASS')
+        self.assertEqual({n['guid'] for n in result['notes'].values()},
+                         {n['guid'] for n in plan['cleared']})
+        self.assertEqual({c['id'] for c in result['cards'].values()},
+                         {cid for n in plan['cleared'] for cid in n['card_ids']})
+        manifest=json.loads(output.with_suffix('.manifest.json').read_text())
+        self.assertEqual(manifest['export_id'],plan['id'])
+        self.assertEqual(manifest['counts'],plan['counts'])
+        revised=next(n for n in manifest['cleared'] if n['guid']=='guid-0')
+        self.assertEqual(revised['finalization'][0]['review']['status'],'approved')
+        self.assertEqual(revised['changes'][0]['before'],self.snapshot['notes']['100']['fields'][0]['value'])
+        self.assertTrue(manifest['output_sha256'])
+        self.assertEqual(len(self.store.db.execute('SELECT * FROM applications').fetchall()),1)
+
+    def test_cleared_export_fails_closed_on_tamper_and_source_drift(self):
+        self.store.import_findings(self.bundle()); plan=self.store.cleared_export()
+        tampered=copy.deepcopy(plan); tampered['cleared'][0]['guid']='missing-guid'
+        with self.assertRaisesRegex(ValueError,'changed or decisions are stale'):
+            export_cleared(self.store,tampered,self.root/'tampered.apkg',plan['id'])
+        changed=copy.deepcopy(self.snapshot)
+        changed['notes']['105']['fields'][0]['value']+=' changed'
+        key=self.add_export(changed)
+        with self.store.db:
+            old=self.store.db.execute('SELECT * FROM audits WHERE export_id=? AND guid=?',(self.key,'guid-5')).fetchone()
+            self.store.db.execute('INSERT INTO audits(export_id,guid,fingerprint,version,created,outcome) VALUES(?,?,?,?,?,?)',
+                                  (key,'guid-5',old['fingerprint'],'v2','later','no_issue_identified'))
+        newer=self.store.cleared_export(key)
+        self.assertEqual(newer['counts']['cleared'],0)
+        self.assertEqual(newer['conflicts'][0]['reason'],'source_drift')
+
+    def test_cleared_export_excludes_unsupported_structural_dispositions(self):
+        bundle=self.schema3_bundle(disposition='delete',changes=[])
+        ids=self.store.import_findings(bundle)
+        self.store.review(ids[0],'approved','human',edits=[])
+        for field in self.snapshot['notes']['100']['fields']:
+            if field['name'] != bundle['findings'][0]['field']:
+                self.store.field_review(self.key,'guid-0',field['name'],'reviewed_unchanged','human',0)
+        plan=self.store.cleared_export()
+        conflict=next(c for c in plan['conflicts'] if c['guid']=='guid-0')
+        self.assertEqual(conflict['reason'],'unsupported_disposition')
 
     def test_cross_field_resolution_text_unchanged_extra_edited(self):
         ids=self.store.import_findings(self.two_field_bundle()); n=self.snapshot['notes']['100']

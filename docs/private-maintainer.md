@@ -52,6 +52,16 @@ This saves machine-readable approvals and `approved-01.preview.txt`, showing exa
 
 The output must be a new filename. Only approved changes from that exact package and the current decision history are accepted. Changing a decision invalidates the old patch. A changed source package, conflicting approvals, altered patch, empty patch, existing output, or unsupported edit fails closed. If output/report already exists, inspect it and use another output name; do not blindly delete and retry.
 
+## Export cleared cards
+
+At the final review stage, use **Export Cleared Cards** in the local review UI. Its preview counts audited notes cleared unchanged separately from fully finalized approved revisions. A `no_issue_identified` audit is a successful unchanged clearance; it does not need a fabricated change. Notes with pending, rejected, deferred, needs-research, stale, conflicting, incomplete field review, or unsupported split/delete/replace decisions are listed as conflicts and excluded.
+
+Choose a new `.apkg` path only after inspecting the preview and exact intended changes. Generation creates a cleared-note-only package plus adjacent `.manifest.json` and `.validation.json` files. The manifest records the export ID, source hash/version/path, note IDs/GUIDs/card IDs, unchanged-versus-revised status, exact before/after edits, audit and final review provenance, timestamps, fingerprints, output hash, and recovery locations. The audit database and source package remain authoritative and unchanged.
+
+The generator copies the source package, filters the copy to the cleared identities, applies only approved field replacements, and then reopens the result. It verifies exact note and card identity/counts, model and field schema, fields, tags, media references, cloze-preserving edits, source hash, and unchanged review plan before publishing the output. Normal export never creates, deletes, splits, or changes the note type of an audited note. The package contains no newly generated cards. As with any Anki package, importing into a collection that lacks the recorded GUIDs can create notes; import it into the matching source collection/profile when update-only behavior is required.
+
+The same flow is available from the command line with `preview-cleared-export --output PLAN.json`, followed by `export-cleared PLAN.json --output NEW.apkg --confirm EXPORT_ID`.
+
 The resulting package is re-read by the existing release reader and compared with the exact expected snapshot before publication to the output path. A sibling `.validation.json` contains exact applied changes, source/output hashes, raw database checks, and the existing release comparison. This is a local candidate, not a distributed deck. Before distribution, test importing it into a disposable Anki profile. Static checks cannot guarantee behavior in individual collections or prove medical correctness.
 
 Read current coverage or export portable history:

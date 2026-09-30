@@ -12,6 +12,7 @@ from .reader import read_package, media_refs
 
 SPECIALTY = 'Pediatric Otolaryngology'
 RESIDENCY_HN = 'Residency Head and Neck'
+ALL_CRABS = 'All Crabs'
 STATUSES = ('awaiting_review', 'approved', 'rejected', 'deferred', 'needs_research')
 RESET_STATUS = 'reset_due_to_field_granularity_migration'
 FIELD_STATUSES = ('awaiting_review', 'reviewed_unchanged')
@@ -81,6 +82,8 @@ def audit_scope(note, scope):
         return pediatric(note)
     if scope == RESIDENCY_HN:
         return residency_hn(note)
+    if scope == ALL_CRABS:
+        return True
     raise ValueError('Unknown audit scope')
 
 
@@ -196,7 +199,7 @@ class Store:
         export = self.export(key); s = export['snapshot']; notes = by_guid(s)
         require(bundle['source_sha256'] == export['id'], 'Proposals target another source package')
         scope = bundle.get('scope', SPECIALTY)
-        require(scope in (SPECIALTY, RESIDENCY_HN), 'Unknown audit scope')
+        require(scope in (SPECIALTY, RESIDENCY_HN, ALL_CRABS), 'Unknown audit scope')
         guids = bundle['sample_guids']
         reprocess = bundle.get('reprocess') is True
         require((1 <= len(guids) <= 500 if reprocess else 10 <= len(guids) <= 20)
@@ -271,7 +274,9 @@ class Store:
                         'Backfill source must be a substantive null-proposal finding')
             f.update(note_id=n['id'], card_ids=[c['id'] for c in s['cards'].values() if c['note_id'] == n['id']],
                      specialty=scope, subspecialty=next((t.split('::')[-1] for t in n['tags']
-                                                        if ('Chapter9' in t if scope == SPECIALTY else t.startswith('Crabs::Residency::HN::'))), scope),
+                                                        if (('Chapter9' in t if scope == SPECIALTY else
+                                                             t.startswith('Crabs::Residency::HN::') if scope == RESIDENCY_HN else
+                                                             t.startswith(('Crabs::Specialty::', 'Crabs::Residency::'))))), scope),
                      source_deck_version=export['version'], source_sha256=export['id'],
                      audit_version=bundle['audit_version'], note_fingerprint=fingerprint(s, n),
                      author=bundle.get('author', 'AI proposal'))
@@ -311,7 +316,8 @@ class Store:
         eligible_statuses = ('awaiting_review', 'needs_research', 'deferred')
         for f in self.findings():
             if (f['source_sha256'] != export['id'] or f['review']['status'] not in eligible_statuses
-                    or f['superseded_by'] or proposed_changes(f) or f['evidence_status'] == 'editorial'):
+                    or f['superseded_by'] or proposed_changes(f) or f['evidence_status'] == 'editorial'
+                    or f.get('disposition') in DISPOSITIONS):
                 continue
             items.append({'supersedes_finding_id': f['id'], 'prior_review': f['review'],
                           'finding': {k: v for k, v in f.items() if k not in ('review', 'superseded_by')},
@@ -484,6 +490,91 @@ class Store:
         body = {'schema': 1, 'source_sha256': export['id'], 'source_version': export['version'],
                 'changes': sorted(changes, key=lambda c: (c['guid'], c['field'])), 'tag_changes': [],
                 'notes_affected': len({c['guid'] for c in changes})}
+        return body | {'id': checksum(body)}
+
+    def cleared_export(self, key=None):
+        """Build a source-bound plan containing only fully cleared audited notes."""
+        export = self.export(key); snapshot = export['snapshot']; notes = by_guid(snapshot)
+        findings = [f for f in self.findings()
+                    if f['source_sha256'] == export['id'] and not f['superseded_by']]
+        findings_by_guid = {}
+        for finding in findings:
+            findings_by_guid.setdefault(finding['guid'], []).append(finding)
+        queue_states = {n['guid']: n for n in self.review_queue(export['id'])['notes']}
+        audits = {}
+        for row in self.db.execute('SELECT * FROM audits WHERE export_id=? ORDER BY id', (export['id'],)):
+            audits[row['guid']] = dict(row)
+
+        cleared = []; conflicts = []
+        for guid, audit in sorted(audits.items()):
+            note = notes.get(guid)
+            reason = None
+            if not note:
+                reason = 'missing_source_note'
+            elif excluded(snapshot, note):
+                reason = 'ineligible_note_type'
+            elif audit['fingerprint'] != fingerprint(snapshot, note):
+                reason = 'source_drift'
+            note_findings = findings_by_guid.get(guid, [])
+            if reason is None and audit['outcome'] == 'no_issue_identified':
+                if note_findings:
+                    reason = 'inconsistent_audit_history'
+                else:
+                    status = 'unchanged'; changes = []
+            elif reason is None:
+                statuses = [f['review']['status'] for f in note_findings]
+                unsupported = [f.get('disposition') for f in note_findings
+                               if f.get('disposition') in ('split', 'delete', 'replace')]
+                if not note_findings or any(s != 'approved' for s in statuses):
+                    reason = 'review_incomplete'
+                elif unsupported:
+                    reason = 'unsupported_disposition'
+                elif queue_states.get(guid, {}).get('status') != 'complete':
+                    reason = 'field_review_incomplete'
+                else:
+                    status = 'revised'; changes = []; seen = set()
+                    for f in note_findings:
+                        edits = f['review'].get('edits') or []
+                        if not edits and f.get('disposition') == 'retain':
+                            continue
+                        if not edits and f.get('replacement') is not None:
+                            edits = [{'field': f['field'], 'original': f['original'],
+                                      'final': f['review']['final']}]
+                        values = {field['name']: field['value'] for field in note['fields']}
+                        for edit in edits:
+                            require(edit['field'] in values and values[edit['field']] == edit['original'],
+                                    'Stale approved field')
+                            pair = (guid, edit['field'])
+                            require(pair not in seen, 'Conflicting approvals for same field; resolve before export')
+                            seen.add(pair); guard_edit(edit['original'], edit['final'])
+                            changes.append({'finding_id': f['id'], 'review_id': f['review']['id'],
+                                            'field': edit['field'], 'before': edit['original'],
+                                            'after': edit['final'], 'decision': f['review']['status'],
+                                            'reviewer': f['review'].get('reviewer'),
+                                            'reviewed_at': f['review'].get('created')})
+                    if not changes:
+                        status = 'unchanged'
+            if reason:
+                conflicts.append({'guid': guid, 'note_id': note['id'] if note else None,
+                                  'reason': reason})
+                continue
+            card_ids = sorted(c['id'] for c in snapshot['cards'].values() if c['note_id'] == note['id'])
+            require(card_ids, 'Cleared note has no cards')
+            cleared.append({'guid': guid, 'note_id': note['id'], 'card_ids': card_ids,
+                            'model_id': note['model_id'], 'field_names': [f['name'] for f in note['fields']],
+                            'tags': note['tags'], 'media': note['media'], 'status': status,
+                            'audit': {'id': audit['id'], 'version': audit['version'],
+                                      'outcome': audit['outcome'], 'created': audit['created'],
+                                      'fingerprint': audit['fingerprint']},
+                            'finalization': [{'finding_id': f['id'], 'disposition': f.get('disposition'),
+                                              'review': f['review']} for f in note_findings],
+                            'changes': changes})
+        body = {'schema': 1, 'source_sha256': export['id'], 'source_version': export['version'],
+                'source_path': export['path'], 'cleared': cleared, 'conflicts': conflicts,
+                'counts': {'cleared': len(cleared),
+                           'unchanged': sum(n['status'] == 'unchanged' for n in cleared),
+                           'revised': sum(n['status'] == 'revised' for n in cleared),
+                           'added': 0, 'deleted': 0, 'conflicts': len(conflicts)}}
         return body | {'id': checksum(body)}
 
 

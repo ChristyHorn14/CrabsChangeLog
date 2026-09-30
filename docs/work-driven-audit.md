@@ -5,6 +5,7 @@ This is the default audit workflow. It uses ChatGPT Work as the research and syn
 ## Simple user triggers
 
 - After uploading the latest Crabs `.apkg` to the Crabs Project: **`grab/audit the next batch of new cards`**
+- **`add in N new cards`** has the same full-workflow meaning: select N eligible unaudited notes, audit every note, research substantive findings, synthesize edits/dispositions, and import the completed results. Merely creating a manifest is not completion.
 - For the existing queue: **`process the next backfill batch`**
 
 Those phrases mean the complete workflow below, not a triage-only pass. A substantive item is not complete merely because it was labeled `needs_research`.

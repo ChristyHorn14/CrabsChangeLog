@@ -4,7 +4,7 @@ import argparse
 import json
 from pathlib import Path
 from crabs.maintainer import Store, preview
-from crabs.maintainer_patch import apply_patch
+from crabs.maintainer_patch import apply_patch, export_cleared
 
 ROOT = Path(__file__).resolve().parent
 
@@ -29,6 +29,8 @@ def run():
     p = commands.add_parser('serve'); p.add_argument('--port', type=int, default=8765)
     p = commands.add_parser('preview'); p.add_argument('--output', type=Path)
     p = commands.add_parser('apply'); p.add_argument('patch', type=Path); p.add_argument('--output', type=Path, required=True); p.add_argument('--confirm', required=True)
+    p = commands.add_parser('preview-cleared-export'); p.add_argument('--output', type=Path)
+    p = commands.add_parser('export-cleared'); p.add_argument('plan', type=Path); p.add_argument('--output', type=Path, required=True); p.add_argument('--confirm', required=True)
     p = commands.add_parser('export-history'); p.add_argument('output', type=Path)
     args = parser.parse_args()
     if args.command == 'serve':
@@ -46,8 +48,8 @@ def run():
                 json.dump(body, f, indent=2, ensure_ascii=False); f.write('\n')
             print(json.dumps({'output': str(args.output), 'candidate_count': body['candidate_count']}))
         elif args.command == 'prepare-work-backfill':
-            if args.limit < 1 or args.limit > 20:
-                raise ValueError('--limit must be between 1 and 20')
+            if args.limit < 1 or args.limit > 100:
+                raise ValueError('--limit must be between 1 and 100')
             body = store.backfill_candidates()
             total = body['candidate_count']
             body['candidates'] = body['candidates'][:args.limit]
@@ -104,6 +106,16 @@ def run():
         elif args.command == 'apply':
             report = apply_patch(store, json.loads(args.patch.read_text()), args.output, args.confirm)
             print(f"{report['status']}: {report['notes_affected']} notes changed. Report: {args.output.with_suffix('.validation.json')}")
+        elif args.command == 'preview-cleared-export':
+            plan = store.cleared_export()
+            if args.output:
+                with args.output.open('x') as f:
+                    json.dump(plan, f, indent=2, ensure_ascii=False); f.write('\n')
+            print(json.dumps({'export_id': plan['id'], **plan['counts'],
+                              'validation': 'passed'}, indent=2))
+        elif args.command == 'export-cleared':
+            report = export_cleared(store, json.loads(args.plan.read_text()), args.output, args.confirm)
+            print(f"{report['status']}: {report['counts']['cleared']} cleared notes exported. Manifest: {args.output.with_suffix('.manifest.json')}")
         elif args.command == 'export-history':
             tables = ('exports', 'audits', 'findings', 'reviews', 'field_reviews', 'review_edits', 'applications')
             with args.output.open('x') as f:
